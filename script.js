@@ -362,4 +362,192 @@
   function syncLayers() {
     const modalOpen = !!els.modal && !els.modal.hidden;
     const bagOpen = !!els.drawer && els.drawer.classList.contains("is-open");
-    if (els.overlay) els.overlay.hidden = !
+    if (els.overlay) els.overlay.hidden = !(modalOpen || bagOpen);
+    document.body.classList.toggle("no-scroll", modalOpen || bagOpen);
+  }
+
+  function openBag() {
+    if (!els.drawer) return;
+    closeMenu();
+    state.lastFocus = document.activeElement;
+    els.drawer.classList.add("is-open");
+    els.drawer.setAttribute("aria-hidden", "false");
+    if (els.bagButton) els.bagButton.setAttribute("aria-expanded", "true");
+    syncLayers();
+    if (els.bagClose) setTimeout(() => els.bagClose.focus(), 60);
+  }
+
+  function closeBag() {
+    if (!els.drawer) return;
+    els.drawer.classList.remove("is-open");
+    els.drawer.setAttribute("aria-hidden", "true");
+    if (els.bagButton) els.bagButton.setAttribute("aria-expanded", "false");
+    syncLayers();
+    if (location.hash === "#sacola" && window.history && history.replaceState) {
+      history.replaceState(null, "", location.pathname + location.search);
+    }
+    if (state.lastFocus && typeof state.lastFocus.focus === "function") {
+      state.lastFocus.focus();
+    }
+  }
+
+  function openModal(id, fromQuickAdd) {
+    const p = BY_ID[id];
+    if (!p || !els.modal) return;
+
+    state.modalProduct = p;
+    state.modalQty = 1;
+    state.lastFocus = document.activeElement;
+
+    delete els.modalImage.dataset.fallback;
+    els.modalImage.src = p.image;
+    els.modalImage.alt = p.name + " - " + p.categoryName + " FREESTYLE DREWP";
+    els.modalCategory.textContent = p.categoryName.toUpperCase();
+    els.modalName.textContent = p.name;
+    els.modalId.textContent = "Ref. " + p.code;
+    els.modalDescription.textContent = p.description;
+    els.modalPrice.textContent = priceText(p);
+    els.modalStock.textContent = statusText(p);
+
+    els.modalSize.innerHTML = '<option value="">Escolher tamanho</option>' +
+      p.sizes.map(s => '<option value="' + esc(s) + '">' + esc(s) + '</option>').join("");
+    els.modalColor.innerHTML = '<option value="">Escolher cor</option>' +
+      p.colors.map(c => '<option value="' + esc(c) + '">' + esc(c) + '</option>').join("");
+    if (p.sizes.length === 1) els.modalSize.value = p.sizes[0];
+    els.modalSize.classList.remove("is-invalid");
+    els.modalColor.classList.remove("is-invalid");
+
+    els.modalQty.textContent = "1";
+    els.modalAdd.disabled = isSoldOut(p);
+    els.modalAdd.textContent = isSoldOut(p) ? "Esgotado" : "Adicionar à sacola";
+
+    els.modal.hidden = false;
+    syncLayers();
+
+    const box = els.modal.querySelector(".modal-box");
+    if (box) box.scrollTop = 0;
+    setTimeout(() => els.modalClose.focus(), 60);
+
+    if (fromQuickAdd && !isSoldOut(p)) {
+      toast("Escolhe o tamanho e a cor para adicionar à sacola.");
+    }
+  }
+
+  function closeModal() {
+    if (!els.modal || els.modal.hidden) return;
+    els.modal.hidden = true;
+    state.modalProduct = null;
+    syncLayers();
+    if (state.lastFocus && typeof state.lastFocus.focus === "function") {
+      state.lastFocus.focus();
+    }
+  }
+
+  function setModalQty(value) {
+    state.modalQty = Math.min(MAX_QTY, Math.max(1, value));
+    els.modalQty.textContent = String(state.modalQty);
+  }
+
+  function modalAddToBag() {
+    const p = state.modalProduct;
+    if (!p) return;
+    if (isSoldOut(p)) {
+      toast("Este produto está esgotado.", "warning");
+      return;
+    }
+    const size = els.modalSize.value;
+    const color = els.modalColor.value;
+    els.modalSize.classList.toggle("is-invalid", !size);
+    els.modalColor.classList.toggle("is-invalid", !color);
+
+    if (!size) {
+      toast("Escolhe o tamanho antes de adicionar.", "warning");
+      els.modalSize.focus();
+      return;
+    }
+    if (!color) {
+      toast("Escolhe a cor antes de adicionar.", "warning");
+      els.modalColor.focus();
+      return;
+    }
+
+    addToCart(p.id, size, color, state.modalQty);
+    closeModal();
+    toast("Produto adicionado à sacola.");
+  }
+
+  /* ======================================================
+     10. CATÁLOGO: FILTROS, PESQUISA, ORDENAÇÃO
+     ====================================================== */
+  function getVisibleProducts() {
+    const tokens = norm(state.search.trim()).split(/\s+/).filter(Boolean);
+
+    let list = PRODUCTS.filter(p => {
+      if (state.category !== "todas" && p.categoryId !== state.category) return false;
+      if (tokens.length === 0) return true;
+      const hay = norm(p.name + " " + p.categoryName + " " + p.categoryId + " " + p.code);
+      return tokens.every(t => hay.indexOf(t) !== -1);
+    });
+
+    list = list.slice();
+
+    switch (state.sort) {
+      case "recentes":
+        list.sort((a, b) => b.order - a.order);
+        break;
+      case "alfabetica":
+        list.sort((a, b) => a.name.localeCompare(b.name, "pt", { numeric: true }));
+        break;
+      case "preco-asc":
+      case "preco-desc": {
+        const dir = state.sort === "preco-asc" ? 1 : -1;
+        list.sort((a, b) => {
+          if (a.price === null && b.price === null) return a.order - b.order;
+          if (a.price === null) return 1;
+          if (b.price === null) return -1;
+          return (a.price - b.price) * dir;
+        });
+        break;
+      }
+      default:
+        break;
+    }
+    return list;
+  }
+
+  function cardHTML(p) {
+    const soldOut = isSoldOut(p);
+    return '<article class="product-card" id="product-' + p.id + '" data-id="' + p.id + '">' +
+      '<button type="button" class="product-media" data-action="details" data-id="' + p.id + '" aria-label="Ver detalhes de ' + esc(p.name) + '">' +
+        '<img src="' + esc(p.image) + '" alt="' + esc(p.name) + ' - ' + esc(p.categoryName) + ' FREESTYLE DREWP" loading="lazy" decoding="async">' +
+        (p.isNew ? '<span class="badge">Novo</span>' : '') +
+      '</button>' +
+      '<div class="product-body">' +
+        '<span class="product-category">' + esc(p.categoryName.toUpperCase()) + '</span>' +
+        '<h3 class="product-name">' + esc(p.name) + '</h3>' +
+        '<p class="product-code">Ref. ' + esc(p.code) + '</p>' +
+        '<p class="product-price">' + esc(priceText(p)) + '</p>' +
+        '<p class="product-stock">' + esc(statusText(p)) + '</p>' +
+        '<div class="card-actions">' +
+          '<button type="button" class="btn btn-outline-dark btn-sm" data-action="details" data-id="' + p.id + '">Ver detalhes</button>' +
+          '<button type="button" class="btn btn-dark btn-sm" data-action="quick-add" data-id="' + p.id + '"' + (soldOut ? ' disabled' : '') + '>' +
+            (soldOut ? 'Esgotado' : 'Adicionar à sacola') + '</button>' +
+        '</div>' +
+      '</div>' +
+    '</article>';
+  }
+
+  function renderProducts() {
+    if (!els.productGrid) return;
+    const list = getVisibleProducts();
+
+    els.productGrid.innerHTML = list.map(cardHTML).join("");
+    els.productGrid.hidden = list.length === 0;
+    if (els.emptyState) els.emptyState.hidden = list.length > 0;
+
+    if (els.resultCount) {
+      els.resultCount.textContent = list.length === 0
+        ? "Nenhum produto encontrado."
+        : "A mostrar " + list.length + " de " + PRODUCTS.length + " peças";
+    }
+    if (els.searchClear) els.searchClear.hidde
