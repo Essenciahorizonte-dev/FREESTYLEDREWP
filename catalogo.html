@@ -1,301 +1,367 @@
-
 <!DOCTYPE html>
-<html lang="pt-MZ">
+<html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Catálogo oficial FREESTYLE DREWP. Camisas, calções, chapéus, conjuntos, sacolas e camisolas.">
-    <meta name="theme-color" content="#000000">
-
-    <title>Catálogo | FREESTYLE DREWP</title>
-
-    <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Catálogo oficial FREESTYLE DREWP. Camisas, calções, chapéus, conjuntos, sacolas e camisolas.">
+  <title>Catálogo | FREESTYLE DREWP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
 </head>
-
 <body>
+  <a class="skip-link" href="#catalogo">Saltar para o catálogo</a>
 
-<!-- ================= CABEÇALHO ================= -->
+  <!-- CABEÇALHO -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio" aria-label="FREESTYLE DREWP - Início">Freestyle Drewp</a>
 
-<header class="header" id="topo">
+      <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+        <a href="#inicio" data-nav>Início</a>
+        <a href="#catalogo" data-nav>Catálogo</a>
+        <a href="#novidades" data-nav>Novidades</a>
+        <a href="#colecoes" data-nav>Coleções</a>
+        <a href="#sobre" data-nav>Sobre a marca</a>
+        <a href="#contacto" data-nav>Contacto</a>
+      </nav>
 
-    <div class="header-container">
+      <div class="header-actions">
+        <button type="button" class="bag-button" id="bagButton" aria-label="Abrir sacola de compras">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 7h12l1 13H5L6 7z"></path>
+            <path d="M9 10V6a3 3 0 0 1 6 0v4"></path>
+          </svg>
+          <span class="bag-count" id="bagCount">0</span>
+        </button>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-        <a href="index.html" class="logo">
-            <span class="logo-script">Freestyle</span>
-            <span class="logo-subtitle">Drewp</span>
-        </a>
-
-        <nav class="navigation" id="navigation">
-
-            <a href="index.html">Início</a>
-            <a href="catalogo.html" class="active">Catálogo</a>
-            <a href="index.html#sobre">Sobre nós</a>
-            <a href="index.html#contactos">Contactos</a>
-
-        </nav>
-
-        <div class="header-actions">
-
-            <a href="#sacola" class="cart-button">
-                Sacola
-                <span class="cart-count" id="cart-count">0</span>
-            </a>
-
-            <button class="menu-toggle" id="menu-toggle"
-                aria-label="Abrir menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
+  <main>
+    <!-- APRESENTAÇÃO -->
+    <section class="hero" id="inicio">
+      <div class="hero-media">
+        <img src="./imagens/conjunto-destaque.png" alt="Conjunto em destaque da colecção FREESTYLE DREWP" fetchpriority="high">
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <p class="eyebrow">Colecção streetwear</p>
+        <h1 class="hero-brand">Freestyle Drewp</h1>
+        <h2 class="hero-title">O teu estilo. As tuas regras.</h2>
+        <p class="hero-text">Mais do que vestir, é expressar quem és. Camisas, calções, chapéus, conjuntos, sacolas e camisolas pensados para quem vive a rua com personalidade.</p>
+        <div class="hero-buttons">
+          <a class="btn btn-light" href="#catalogo">Explorar catálogo</a>
+          <a class="btn btn-outline-light" href="#novidades">Ver novidades</a>
         </div>
-
-    </div>
-
-</header>
-
-
-<main>
-
-<!-- ================= INTRODUÇÃO ================= -->
-
-<section class="catalog-hero">
-
-    <div class="catalog-hero-content">
-
-        <span class="section-label">FREESTYLE DREWP COLLECTION</span>
-
-        <h1>O nosso catálogo</h1>
-
-        <p>
-            Explora as nossas categorias, escolhe as tuas peças
-            favoritas e prepara a tua encomenda.
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- ================= CATEGORIAS E FILTROS ================= -->
-
-<section class="catalog-section section-padding">
-
-    <div class="section-heading">
-
-        <span class="section-label">DESCOBRE A COLECÇÃO</span>
-
-        <h2>Escolhe o teu estilo</h2>
-
-    </div>
-
-    <div class="catalog-filters" id="catalog-filters">
-
-        <button class="filter-button active" data-filter="todas">
-            Todas as peças
-        </button>
-
-        <button class="filter-button" data-filter="camisas">
-            Camisas
-        </button>
-
-        <button class="filter-button" data-filter="calcoes">
-            Calções
-        </button>
-
-        <button class="filter-button" data-filter="chapeus">
-            Chapéus
-        </button>
-
-        <button class="filter-button" data-filter="conjuntos">
-            Conjuntos
-        </button>
-
-        <button class="filter-button" data-filter="sacolas">
-            Sacolas
-        </button>
-
-        <button class="filter-button" data-filter="camisolas">
-            Camisolas
-        </button>
-
-    </div>
-
-
-    <!-- ================= CAMISAS ================= -->
-
-    <section class="catalog-category" id="camisas" data-category="camisas">
-
-        <div class="category-heading">
-            <h2>Camisas</h2>
-            <p>Expressa o teu estilo.</p>
-        </div>
-
-        <div class="products-grid">
-
-            <article class="product-card" data-category="camisas" data-id="camisa1" data-name="Camisa 01" data-price="0">
-                <img src="imagens/camisa1.png" alt="Camisa 01 FREESTYLE">
-                <div class="product-info">
-                    <span>CAMISAS</span>
-                    <h3>Camisa 01</h3>
-                    <p class="product-price">Preço a definir</p>
-                    <label>Tamanho</label>
-                    <select class="product-size">
-                        <option value="">Escolher tamanho</option>
-                        <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
-                    </select>
-                    <label>Cor</label>
-                    <select class="product-color">
-                        <option value="">Escolher cor</option>
-                        <option>Preto</option><option>Branco</option><option>Outra</option>
-                    </select>
-                    <label>Quantidade</label>
-                    <input type="number" class="product-quantity" min="1" value="1">
-                    <button class="add-to-cart">Adicionar à sacola</button>
-                </div>
-            </article>
-
-            <article class="product-card" data-category="camisas" data-id="camisa2" data-name="Camisa 02" data-price="0">
-                <img src="imagens/camisa2.png" alt="Camisa 02 FREESTYLE">
-                <div class="product-info">
-                    <span>CAMISAS</span><h3>Camisa 02</h3>
-                    <p class="product-price">Preço a definir</p>
-                    <label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
-                    <label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select>
-                    <label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1">
-                    <button class="add-to-cart">Adicionar à sacola</button>
-                </div>
-            </article>
-
-            <article class="product-card" data-category="camisas" data-id="camisa3" data-name="Camisa 03" data-price="0">
-                <img src="imagens/camisa3.png" alt="Camisa 03 FREESTYLE">
-                <div class="product-info">
-                    <span>CAMISAS</span><h3>Camisa 03</h3><p class="product-price">Preço a definir</p>
-                    <label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
-                    <label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select>
-                    <label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1">
-                    <button class="add-to-cart">Adicionar à sacola</button>
-                </div>
-            </article>
-
-            <article class="product-card" data-category="camisas" data-id="camisa4" data-name="Camisa 04" data-price="0">
-                <img src="imagens/camisa4.png" alt="Camisa 04 FREESTYLE">
-                <div class="product-info">
-                    <span>CAMISAS</span><h3>Camisa 04</h3><p class="product-price">Preço a definir</p>
-                    <label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
-                    <label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select>
-                    <label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1">
-                    <button class="add-to-cart">Adicionar à sacola</button>
-                </div>
-            </article>
-
-            <article class="product-card" data-category="camisas" data-id="camisa5" data-name="Camisa 05" data-price="0">
-                <img src="imagens/camisa5.png" alt="Camisa 05 FREESTYLE">
-                <div class="product-info">
-                    <span>CAMISAS</span><h3>Camisa 05</h3><p class="product-price">Preço a definir</p>
-                    <label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
-                    <label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select>
-                    <label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1">
-                    <button class="add-to-cart">Adicionar à sacola</button>
-                </div>
-            </article>
-
-            <article class="product-card" data-category="camisas" data-id="camisa6" data-name="Camisa 06" data-price="0">
-                <img src="imagens/camisa6.png" alt="Camisa 06 FREESTYLE">
-                <div class="product-info">
-                    <span>CAMISAS</span><h3>Camisa 06</h3><p class="product-price">Preço a definir</p>
-                    <label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
-                    <label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select>
-                    <label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1">
-                    <button class="add-to-cart">Adicionar à sacola</button>
-                </div>
-            </article>
-
-        </div>
+      </div>
     </section>
 
-
-    <!-- ================= CALÇÕES ================= -->
-
-    <section class="catalog-category" id="calcoes" data-category="calcoes">
-
-        <div class="category-heading">
-            <h2>Calções</h2>
-            <p>Conforto e personalidade.</p>
-        </div>
-
-        <div class="products-grid">
-
-            <article class="product-card" data-category="calcoes" data-id="calcao1" data-name="Calção 01" data-price="0">
-                <img src="imagens/calcao1.png" alt="Calção 01">
-                <div class="product-info"><span>CALÇÕES</span><h3>Calção 01</h3><p class="product-price">Preço a definir</p><label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select><label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1"><button class="add-to-cart">Adicionar à sacola</button></div>
-            </article>
-
-            <article class="product-card" data-category="calcoes" data-id="calcao2" data-name="Calção 02" data-price="0">
-                <img src="imagens/calcao2.png" alt="Calção 02">
-                <div class="product-info"><span>CALÇÕES</span><h3>Calção 02</h3><p class="product-price">Preço a definir</p><label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select><label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1"><button class="add-to-cart">Adicionar à sacola</button></div>
-            </article>
-
-            <article class="product-card" data-category="calcoes" data-id="calcao3" data-name="Calção 03" data-price="0">
-                <img src="imagens/calcao3.png" alt="Calção 03">
-                <div class="product-info"><span>CALÇÕES</span><h3>Calção 03</h3><p class="product-price">Preço a definir</p><label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select><label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1"><button class="add-to-cart">Adicionar à sacola</button></div>
-            </article>
-
-            <article class="product-card" data-category="calcoes" data-id="calcao4" data-name="Calção 04" data-price="0">
-                <img src="imagens/calcao4.png" alt="Calção 04">
-                <div class="product-info"><span>CALÇÕES</span><h3>Calção 04</h3><p class="product-price">Preço a definir</p><label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select><label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1"><button class="add-to-cart">Adicionar à sacola</button></div>
-            </article>
-
-            <article class="product-card" data-category="calcoes" data-id="calcao5" data-name="Calção 05" data-price="0">
-                <img src="imagens/calcao5.png" alt="Calção 05">
-                <div class="product-info"><span>CALÇÕES</span><h3>Calção 05</h3><p class="product-price">Preço a definir</p><label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select><label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1"><button class="add-to-cart">Adicionar à sacola</button></div>
-            </article>
-
-            <article class="product-card" data-category="calcoes" data-id="calcao6" data-name="Calção 06" data-price="0">
-                <img src="imagens/calcao6.png" alt="Calção 06">
-                <div class="product-info"><span>CALÇÕES</span><h3>Calção 06</h3><p class="product-price">Preço a definir</p><label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select><label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1"><button class="add-to-cart">Adicionar à sacola</button></div>
-            </article>
-
-        </div>
+    <!-- FAIXA DE VALORES -->
+    <section class="strip" aria-label="Destaques da marca">
+      <div class="container strip-inner">
+        <span>Moda urbana</span>
+        <span>Personalidade</span>
+        <span>Exclusividade</span>
+        <span>Encomenda pelo WhatsApp</span>
+      </div>
     </section>
 
+    <!-- CATÁLOGO -->
+    <section class="section" id="catalogo">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow dark">Catálogo</p>
+          <h2 class="section-title">Escolhe o teu estilo</h2>
+          <p class="section-text">36 peças em 6 categorias. Pesquisa, filtra, abre os detalhes e prepara a tua encomenda.</p>
+        </header>
 
-    <!-- ================= CHAPÉUS ================= -->
-
-    <section class="catalog-category" id="chapeus" data-category="chapeus">
-
-        <div class="category-heading">
-            <h2>Chapéus</h2>
-            <p>O detalhe que completa o visual.</p>
+        <div class="filters" id="categoryFilters" role="group" aria-label="Filtrar por categoria">
+          <button type="button" class="filter-btn is-active" data-category="todas" aria-pressed="true">Todas as peças</button>
+          <button type="button" class="filter-btn" data-category="camisas" aria-pressed="false">Camisas</button>
+          <button type="button" class="filter-btn" data-category="calcoes" aria-pressed="false">Calções</button>
+          <button type="button" class="filter-btn" data-category="chapeus" aria-pressed="false">Chapéus</button>
+          <button type="button" class="filter-btn" data-category="conjuntos" aria-pressed="false">Conjuntos</button>
+          <button type="button" class="filter-btn" data-category="sacolas" aria-pressed="false">Sacolas</button>
+          <button type="button" class="filter-btn" data-category="camisolas" aria-pressed="false">Camisolas</button>
         </div>
 
-        <div class="products-grid">
+        <div class="toolbar">
+          <div class="search-box">
+            <label for="searchInput" class="visually-hidden">Pesquisar produtos</label>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="M20 20l-4-4"></path>
+            </svg>
+            <input type="search" id="searchInput" placeholder="Pesquisar por nome ou categoria" autocomplete="off">
+            <button type="button" class="search-clear" id="searchClear" aria-label="Limpar pesquisa" hidden>&times;</button>
+          </div>
 
-            <article class="product-card" data-category="chapeus" data-id="chapeu1" data-name="Chapéu 01" data-price="0"><img src="imagens/chapeu1.png" alt="Chapéu 01"><div class="product-info"><span>CHAPÉUS</span><h3>Chapéu 01</h3><p class="product-price">Preço a definir</p><label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>Único</option></select><label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select><label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1"><button class="add-to-cart">Adicionar à sacola</button></div></article>
-
-            <article class="product-card" data-category="chapeus" data-id="chapeu2" data-name="Chapéu 02" data-price="0"><img src="imagens/chapeu2.png" alt="Chapéu 02"><div class="product-info"><span>CHAPÉUS</span><h3>Chapéu 02</h3><p class="product-price">Preço a definir</p><label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>Único</option></select><label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select><label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1"><button class="add-to-cart">Adicionar à sacola</button></div></article>
-
-            <article class="product-card" data-category="chapeus" data-id="chapeu3" data-name="Chapéu 03" data-price="0"><img src="imagens/chapeu3.png" alt="Chapéu 03"><div class="product-info"><span>CHAPÉUS</span><h3>Chapéu 03</h3><p class="product-price">Preço a definir</p><label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>Único</option></select><label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select><label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1"><button class="add-to-cart">Adicionar à sacola</button></div></article>
-
-            <article class="product-card" data-category="chapeus" data-id="chapeu4" data-name="Chapéu 04" data-price="0"><img src="imagens/chapeu4.png" alt="Chapéu 04"><div class="product-info"><span>CHAPÉUS</span><h3>Chapéu 04</h3><p class="product-price">Preço a definir</p><label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>Único</option></select><label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select><label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1"><button class="add-to-cart">Adicionar à sacola</button></div></article>
-
-            <article class="product-card" data-category="chapeus" data-id="chapeu5" data-name="Chapéu 05" data-price="0"><img src="imagens/chapeu5.png" alt="Chapéu 05"><div class="product-info"><span>CHAPÉUS</span><h3>Chapéu 05</h3><p class="product-price">Preço a definir</p><label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>Único</option></select><label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select><label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1"><button class="add-to-cart">Adicionar à sacola</button></div></article>
-
-            <article class="product-card" data-category="chapeus" data-id="chapeu6" data-name="Chapéu 06" data-price="0"><img src="imagens/chapeu6.png" alt="Chapéu 06"><div class="product-info"><span>CHAPÉUS</span><h3>Chapéu 06</h3><p class="product-price">Preço a definir</p><label>Tamanho</label><select class="product-size"><option value="">Escolher tamanho</option><option>Único</option></select><label>Cor</label><select class="product-color"><option value="">Escolher cor</option><option>Preto</option><option>Branco</option><option>Outra</option></select><label>Quantidade</label><input type="number" class="product-quantity" min="1" value="1"><button class="add-to-cart">Adicionar à sacola</button></div></article>
-
+          <div class="sort-box">
+            <label for="sortSelect">Ordenar</label>
+            <select id="sortSelect">
+              <option value="todos">Todos</option>
+              <option value="recentes">Mais recentes</option>
+              <option value="alfabetica">Ordem alfabética</option>
+              <option value="preco-asc">Menor preço</option>
+              <option value="preco-desc">Maior preço</option>
+            </select>
+          </div>
         </div>
+
+        <p class="result-count" id="resultCount" aria-live="polite"></p>
+
+        <div class="product-grid" id="productGrid"></div>
+
+        <div class="empty-state" id="emptyState" hidden>
+          <h3>Nenhum produto encontrado</h3>
+          <p>Não encontrámos peças para esta pesquisa. Tenta outro nome ou limpa os filtros.</p>
+          <button type="button" class="btn btn-dark" id="resetFilters">Limpar pesquisa</button>
+        </div>
+      </div>
     </section>
 
+    <!-- NOVIDADES -->
+    <section class="section section-dark" id="novidades">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Novidades</p>
+          <h2 class="section-title">O que há de novo</h2>
+          <p class="section-text">Novas peças, destaques da marca e recomendações para completares o teu visual.</p>
+        </header>
 
-    <!-- ================= CONJUNTOS ================= -->
+        <h3 class="subhead">Novos produtos</h3>
+        <div class="mini-grid" id="newGrid"></div>
 
-    <section class="catalog-category" id="conjuntos" data-category="conjuntos">
+        <h3 class="subhead">Em destaque</h3>
+        <div class="mini-grid" id="featuredGrid"></div>
 
-        <div class="category-heading">
-            <h2>Conjuntos</h2>
-            <p>Combinações que fazem a diferença.</p>
+        <h3 class="subhead">Recomendações da marca</h3>
+        <div class="mini-grid" id="recoGrid"></div>
+      </div>
+    </section>
+
+    <!-- COLEÇÕES -->
+    <section class="section" id="colecoes">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow dark">Coleções</p>
+          <h2 class="section-title">Explora por colecção</h2>
+          <p class="section-text">Escolhe uma linha e vai directamente às peças.</p>
+        </header>
+
+        <div class="collection-grid">
+          <a href="#catalogo" class="collection-card" data-go-category="camisas">
+            <img src="./imagens/camisa1.png" alt="Colecção de camisas FREESTYLE DREWP" loading="lazy">
+            <span class="collection-label"><strong>Camisas</strong><small>Expressa o teu estilo</small></span>
+          </a>
+          <a href="#catalogo" class="collection-card" data-go-category="calcoes">
+            <img src="./imagens/calcao1.png" alt="Colecção de calções FREESTYLE DREWP" loading="lazy">
+            <span class="collection-label"><strong>Calções</strong><small>Conforto e personalidade</small></span>
+          </a>
+          <a href="#catalogo" class="collection-card" data-go-category="chapeus">
+            <img src="./imagens/chapeu1.png" alt="Colecção de chapéus FREESTYLE DREWP" loading="lazy">
+            <span class="collection-label"><strong>Chapéus</strong><small>O detalhe que completa o visual</small></span>
+          </a>
+          <a href="#catalogo" class="collection-card" data-go-category="conjuntos">
+            <img src="./imagens/conjunto1.png" alt="Colecção de conjuntos FREESTYLE DREWP" loading="lazy">
+            <span class="collection-label"><strong>Conjuntos</strong><small>Combinações que fazem a diferença</small></span>
+          </a>
+          <a href="#catalogo" class="collection-card" data-go-category="sacolas">
+            <img src="./imagens/sacola1.png" alt="Colecção de sacolas FREESTYLE DREWP" loading="lazy">
+            <span class="collection-label"><strong>Sacolas</strong><small>Leva o teu estilo contigo</small></span>
+          </a>
+          <a href="#catalogo" class="collection-card" data-go-category="camisolas">
+            <img src="./imagens/camisola1.png" alt="Colecção de camisolas FREESTYLE DREWP" loading="lazy">
+            <span class="collection-label"><strong>Camisolas</strong><small>Atitude em cada detalhe</small></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE A MARCA -->
+    <section class="section section-light" id="sobre">
+      <div class="container about-grid">
+        <div class="about-text">
+          <p class="eyebrow dark">Sobre a marca</p>
+          <h2 class="section-title">Não é apenas roupa. É identidade.</h2>
+          <p>A FREESTYLE DREWP acredita que cada pessoa tem uma maneira única de expressar o seu estilo. Trabalhamos com peças de moda e acessórios que representam atitude, personalidade e liberdade.</p>
+          <p>Inspirada na cultura urbana, a marca valoriza a originalidade e a expressão individual: vestir é uma forma de dizer quem és, sem pedir licença.</p>
+          <a class="btn btn-dark" href="#catalogo">Descobrir a colecção</a>
+        </div>
+        <ul class="about-values">
+          <li><strong>Identidade</strong><span>Peças com carácter próprio.</span></li>
+          <li><strong>Estilo</strong><span>Visual urbano, limpo e marcante.</span></li>
+          <li><strong>Originalidade</strong><span>Longe do óbvio e do genérico.</span></li>
+          <li><strong>Cultura urbana</strong><span>Inspirada na rua e na juventude.</span></li>
+          <li><strong>Personalidade</strong><span>Cada pessoa, a sua maneira.</span></li>
+          <li><strong>Expressão individual</strong><span>A moda como forma de te expressares.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="section section-dark" id="contacto">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Contacto</p>
+          <h2 class="section-title">Fala connosco</h2>
+          <p class="section-text">Gostaste de alguma peça? Fala directamente connosco e confirma disponibilidade, pagamento e entrega.</p>
+        </header>
+
+        <div class="contact-grid">
+          <a class="contact-card" id="contactWhatsapp" href="#" target="_blank" rel="noopener">
+            <span class="contact-label">WhatsApp</span>
+            <span class="contact-value" id="contactWhatsappText">A configurar</span>
+          </a>
+          <a class="contact-card" id="contactPhone" href="#">
+            <span class="contact-label">Telefone</span>
+            <span class="contact-value" id="contactPhoneText">A configurar</span>
+          </a>
+          <a class="contact-card" id="contactInstagram" href="#" target="_blank" rel="noopener">
+            <span class="contact-label">Instagram</span>
+            <span class="contact-value" id="contactInstagramText">A configurar</span>
+          </a>
+          <a class="contact-card" id="contactFacebook" href="#" target="_blank" rel="noopener">
+            <span class="contact-label">Facebook</span>
+            <span class="contact-value" id="contactFacebookText">A configurar</span>
+          </a>
+          <div class="contact-card contact-static" id="contactLocation">
+            <span class="contact-label">Localização</span>
+            <span class="contact-value" id="contactLocationText">A configurar</span>
+          </div>
         </div>
 
-        <div class="products-grid">
+        <div class="contact-cta">
+          <button type="button" class="btn btn-light" id="contactWhatsappButton">Falar pelo WhatsApp</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
-            <article class="product-card" data-category="conjuntos" data-id="conjunto1" data-name="Conjunto 01" data-price="0"><img src="imagens/conjunto1.png" alt="Conjunto 01"><div class="product-info"><span>CONJUNTOS<
+  <!-- RODAPÉ -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#inicio">Freestyle Drewp</a>
+        <p>Moda urbana com atitude, personalidade e liberdade. O teu estilo. As tuas regras.</p>
+      </div>
+
+      <div>
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#catalogo">Catálogo</a></li>
+          <li><a href="#novidades">Novidades</a></li>
+          <li><a href="#colecoes">Coleções</a></li>
+          <li><a href="#sobre">Sobre a marca</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Categorias</h4>
+        <ul>
+          <li><a href="#catalogo" data-go-category="camisas">Camisas</a></li>
+          <li><a href="#catalogo" data-go-category="calcoes">Calções</a></li>
+          <li><a href="#catalogo" data-go-category="chapeus">Chapéus</a></li>
+          <li><a href="#catalogo" data-go-category="conjuntos">Conjuntos</a></li>
+          <li><a href="#catalogo" data-go-category="sacolas">Sacolas</a></li>
+          <li><a href="#catalogo" data-go-category="camisolas">Camisolas</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a id="footerWhatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a id="footerInstagram" href="#" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a id="footerFacebook" href="#" target="_blank" rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; <span id="currentYear">2026</span> FREESTYLE DREWP. Todos os direitos reservados.</p>
+      <p>Criado por <strong>ESSÊNCIA HORIZONTE</strong></p>
+    </div>
+  </footer>
+
+  <!-- SOBREPOSIÇÃO -->
+  <div class="overlay" id="overlay" hidden></div>
+
+  <!-- JANELA DE DETALHES -->
+  <div class="modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalName" hidden>
+    <div class="modal-box">
+      <button type="button" class="modal-close" id="modalClose" aria-label="Fechar detalhes">&times;</button>
+      <div class="modal-image">
+        <img id="modalImage" src="" alt="">
+      </div>
+      <div class="modal-info">
+        <p class="product-category" id="modalCategory"></p>
+        <h3 id="modalName"></h3>
+        <p class="product-code" id="modalId"></p>
+        <p class="modal-description" id="modalDescription"></p>
+        <p class="product-price" id="modalPrice"></p>
+        <p class="product-stock" id="modalStock"></p>
+
+        <div class="option-row">
+          <div class="field">
+            <label for="modalSize">Tamanho</label>
+            <select id="modalSize"></select>
+          </div>
+          <div class="field">
+            <label for="modalColor">Cor</label>
+            <select id="modalColor"></select>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-label" id="modalQtyLabel">Quantidade</span>
+          <div class="qty" role="group" aria-labelledby="modalQtyLabel">
+            <button type="button" id="modalQtyMinus" aria-label="Diminuir quantidade">&minus;</button>
+            <span id="modalQty" aria-live="polite">1</span>
+            <button type="button" id="modalQtyPlus" aria-label="Aumentar quantidade">+</button>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-dark btn-block" id="modalAdd">Adicionar à sacola</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SACOLA -->
+  <aside class="bag-drawer" id="bagDrawer" aria-label="Sacola de compras" aria-hidden="true">
+    <div class="bag-head">
+      <h3>A tua sacola</h3>
+      <button type="button" class="modal-close static" id="bagClose" aria-label="Fechar sacola">&times;</button>
+    </div>
+
+    <div class="bag-body">
+      <p class="bag-empty" id="bagEmpty">A tua sacola está vazia. Explora o catálogo e escolhe as tuas peças.</p>
+      <ul class="bag-items" id="bagItems"></ul>
+    </div>
+
+    <div class="bag-foot">
+      <div class="bag-summary">
+        <div><span>Artigos</span><strong id="bagSummaryCount">0</strong></div>
+        <div><span>Total</span><strong id="bagTotal">Preço sob consulta</strong></div>
+      </div>
+      <button type="button" class="btn btn-dark btn-block" id="bagCheckout">Finalizar encomenda</button>
+      <div class="bag-secondary">
+        <button type="button" class="btn btn-outline-dark" id="bagContinue">Continuar a comprar</button>
+        <button type="button" class="btn btn-outline-dark" id="bagClear">Esvaziar sacola</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NOTIFICAÇÕES -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>
