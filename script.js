@@ -1,438 +1,365 @@
+/* ==========================================================
+   FREESTYLE DREWP - script.js
+   Catálogo, pesquisa, ordenação, detalhes, sacola e WhatsApp
+   ========================================================== */
 (() => {
   "use strict";
 
-  // COLOCA AQUI O NÚMERO REAL DA LOJA
-  // Exemplo: 258841234567
-  const WHATSAPP_NUMBER = "258XXXXXXXXX";
+  /* ======================================================
+     1. CONFIGURAÇÃO (edita aqui)
+     ====================================================== */
+  const CONFIG = {
+    // Número oficial de WhatsApp, só dígitos, com indicativo (258 = Moçambique)
+    whatsapp: "258861697479",
+    // Telefone para chamadas. Exemplo: "258841234567". Vazio = "A configurar"
+    phone: "",
+    // Instagram: @utilizador ou endereço completo. Vazio = "A configurar"
+    instagram: "",
+    // Facebook: nome da página ou endereço completo. Vazio = "A configurar"
+    facebook: "",
+    // Localização em texto. Exemplo: "Maputo". Vazio = "A configurar"
+    location: "",
+    // Moeda mostrada nos preços
+    currency: "MT"
+  };
 
-  const CART_KEY = "freestyle_drewp_cart";
+  // Preços reais por produto. Enquanto estiver vazio, aparece "Preço sob consulta".
+  // Exemplo: camisas1: 1500, calcoes3: 900
+  const PRICES = {
+  };
 
-  const categories = [
-    {
-      id: "camisas",
-      name: "Camisas",
-      description: "Expressa o teu estilo.",
-      prefix: "Camisa"
-    },
-    {
-      id: "calcoes",
-      name: "Calções",
-      description: "Conforto e personalidade.",
-      prefix: "Calção"
-    },
-    {
-      id: "chapeus",
-      name: "Chapéus",
-      description: "O detalhe que completa o visual.",
-      prefix: "Chapéu"
-    },
-    {
-      id: "conjuntos",
-      name: "Conjuntos",
-      description: "Combinações que fazem a diferença.",
-      prefix: "Conjunto"
-    },
-    {
-      id: "sacolas",
-      name: "Sacolas",
-      description: "Leva o teu estilo contigo.",
-      prefix: "Sacola"
-    },
-    {
-      id: "camisolas",
-      name: "Camisolas",
-      description: "Conforto para todos os dias.",
-      prefix: "Camisola"
-    }
+  // Disponibilidade por produto (opcional).
+  // Exemplos: camisas1: "Disponível", camisas2: "Esgotado", camisas3: "Sob encomenda"
+  const AVAILABILITY = {
+  };
+
+  /* ======================================================
+     2. DADOS DOS PRODUTOS (6 categorias x 6 produtos = 36)
+     ====================================================== */
+  const CART_KEY = "freestyle_drewp_sacola_v2";
+  const MAX_QTY = 99;
+  const DEFAULT_STATUS = "Disponibilidade sob confirmação";
+
+  const COLORS = ["Preto", "Branco", "Outra"];
+  const SIZES_FULL = ["S", "M", "L", "XL", "XXL"];
+  const SIZES_ONE = ["Único"];
+
+  const CATEGORIES = [
+    { id: "camisas", name: "Camisas", singular: "Camisa", img: "camisa", code: "CAM", sizes: SIZES_FULL, tagline: "Expressa o teu estilo." },
+    { id: "calcoes", name: "Calções", singular: "Calção", img: "calcao", code: "CAL", sizes: SIZES_FULL, tagline: "Conforto e personalidade." },
+    { id: "chapeus", name: "Chapéus", singular: "Chapéu", img: "chapeu", code: "CHA", sizes: SIZES_ONE, tagline: "O detalhe que completa o visual." },
+    { id: "conjuntos", name: "Conjuntos", singular: "Conjunto", img: "conjunto", code: "CON", sizes: SIZES_FULL, tagline: "Combinações que fazem a diferença." },
+    { id: "sacolas", name: "Sacolas", singular: "Sacola", img: "sacola", code: "SAC", sizes: SIZES_ONE, tagline: "Leva o teu estilo contigo." },
+    { id: "camisolas", name: "Camisolas", singular: "Camisola", img: "camisola", code: "CMS", sizes: SIZES_FULL, tagline: "Conforto para todos os dias." }
   ];
 
-  const container = document.getElementById("products-container");
+  const PRODUCTS = [];
+  let orderCounter = 0;
 
-  const $ = (selector, parent = document) =>
-    parent.querySelector(selector);
-
-  const $$ = (selector, parent = document) =>
-    [...parent.querySelectorAll(selector)];
-
-  let cart = [];
-
-  try {
-    cart = JSON.parse(sessionStorage.getItem(CART_KEY) || "[]");
-
-    if (!Array.isArray(cart)) {
-      cart = [];
+  CATEGORIES.forEach(cat => {
+    for (let i = 1; i <= 6; i++) {
+      orderCounter += 1;
+      const num = String(i).padStart(2, "0");
+      const id = cat.id + i;
+      const name = cat.singular + " " + num;
+      PRODUCTS.push({
+        id: id,
+        categoryId: cat.id,
+        categoryName: cat.name,
+        name: name,
+        code: "FD-" + cat.code + "-" + num,
+        image: "imagens/" + cat.img + i + ".png",
+        description: name + " da colecção FREESTYLE DREWP. " + cat.tagline +
+          " Escolhe o tamanho e a cor e confirma preço e disponibilidade pelo WhatsApp.",
+        sizes: cat.sizes,
+        colors: COLORS,
+        order: orderCounter,
+        price: typeof PRICES[id] === "number" ? PRICES[id] : null,
+        status: AVAILABILITY[id] || "",
+        isNew: i === 6,
+        isFeatured: i === 1,
+        isReco: i === 3
+      });
     }
-  } catch (error) {
-    cart = [];
+  });
+
+  const BY_ID = {};
+  PRODUCTS.forEach(p => { BY_ID[p.id] = p; });
+
+  const HAS_PRICES = PRODUCTS.some(p => p.price !== null);
+
+  const PLACEHOLDER = "data:image/svg+xml;utf8," + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500">' +
+    '<rect width="400" height="500" fill="#ececea"/>' +
+    '<text x="200" y="255" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" ' +
+    'letter-spacing="3" fill="#8a8a87">FREESTYLE DREWP</text></svg>'
+  );
+
+  /* ======================================================
+     3. UTILITÁRIOS
+     ====================================================== */
+  const $ = id => document.getElementById(id);
+
+  const esc = value => String(value).replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+
+  const norm = value => String(value)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+  const digits = value => String(value || "").replace(/\D/g, "");
+  const isValidNumber = value => /^\d{9,15}$/.test(value);
+
+  const formatPrice = n => n.toLocaleString("pt-PT") + " " + CONFIG.currency;
+  const priceText = p => (p.price !== null ? formatPrice(p.price) : "Preço sob consulta");
+  const statusText = p => p.status || DEFAULT_STATUS;
+  const isSoldOut = p => norm(p.status) === "esgotado";
+
+  function formatPhone(n) {
+    if (/^258\d{9}$/.test(n)) {
+      return "+258 " + n.slice(3, 5) + " " + n.slice(5, 8) + " " + n.slice(8);
+    }
+    return "+" + n;
   }
 
-  function createProducts() {
-    if (!container) return;
+  /* ======================================================
+     4. ELEMENTOS
+     ====================================================== */
+  const els = {
+    header: $("siteHeader"),
+    menuToggle: $("menuToggle") || $("menu-toggle"),
+    mainNav: $("mainNav") || $("navigation"),
+    bagButton: $("bagButton"),
+    filters: $("categoryFilters"),
+    searchInput: $("searchInput"),
+    searchClear: $("searchClear"),
+    sortSelect: $("sortSelect"),
+    resultCount: $("resultCount"),
+    productGrid: $("productGrid"),
+    emptyState: $("emptyState"),
+    resetFilters: $("resetFilters"),
+    newGrid: $("newGrid"),
+    featuredGrid: $("featuredGrid"),
+    recoGrid: $("recoGrid"),
+    overlay: $("overlay"),
+    modal: $("productModal"),
+    modalClose: $("modalClose"),
+    modalImage: $("modalImage"),
+    modalCategory: $("modalCategory"),
+    modalName: $("modalName"),
+    modalId: $("modalId"),
+    modalDescription: $("modalDescription"),
+    modalPrice: $("modalPrice"),
+    modalStock: $("modalStock"),
+    modalSize: $("modalSize"),
+    modalColor: $("modalColor"),
+    modalQty: $("modalQty"),
+    modalQtyMinus: $("modalQtyMinus"),
+    modalQtyPlus: $("modalQtyPlus"),
+    modalAdd: $("modalAdd"),
+    drawer: $("bagDrawer"),
+    bagClose: $("bagClose"),
+    bagEmpty: $("bagEmpty"),
+    bagItems: $("bagItems"),
+    bagSummaryCount: $("bagSummaryCount"),
+    bagTotal: $("bagTotal"),
+    bagCheckout: $("bagCheckout"),
+    bagContinue: $("bagContinue"),
+    bagClear: $("bagClear"),
+    toasts: $("toastContainer"),
+    contactWhatsappButton: $("contactWhatsappButton")
+  };
 
-    container.innerHTML = "";
+  /* ======================================================
+     5. ESTADO
+     ====================================================== */
+  const state = {
+    category: "todas",
+    search: "",
+    sort: "todos",
+    cart: [],
+    modalProduct: null,
+    modalQty: 1,
+    lastFocus: null
+  };
 
-    categories.forEach(category => {
-      const section = document.createElement("section");
+  /* ======================================================
+     6. NOTIFICAÇÕES
+     ====================================================== */
+  function toast(message, type) {
+    if (!els.toasts) return;
+    const el = document.createElement("div");
+    el.className = "toast" + (type === "warning" ? " is-warning" : "");
+    el.setAttribute("role", "status");
+    el.textContent = message;
+    els.toasts.appendChild(el);
 
-      section.className = "catalog-category";
-      section.id = category.id;
-      section.dataset.category = category.id;
+    while (els.toasts.children.length > 3) {
+      els.toasts.removeChild(els.toasts.firstChild);
+    }
 
-      section.innerHTML = `
-        <div class="category-heading">
-          <span class="section-label">FREESTYLE DREWP COLLECTION</span>
-          <h2>${category.name}</h2>
-          <p>${category.description}</p>
-        </div>
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => el.classList.add("is-visible"));
+    });
 
-        <div class="products-grid"></div>
-      `;
+    setTimeout(() => {
+      el.classList.remove("is-visible");
+      setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 350);
+    }, 2800);
+  }
 
-      const grid = $(".products-grid", section);
+  /* ======================================================
+     7. SACOLA (dados)
+     ====================================================== */
+  function loadCart() {
+    try {
+      const raw = JSON.parse(sessionStorage.getItem(CART_KEY) || "[]");
+      if (!Array.isArray(raw)) return [];
+      return raw
+        .filter(it => it && BY_ID[it.id] && typeof it.size === "string" && typeof it.color === "string")
+        .map(it => ({
+          id: it.id,
+          size: it.size,
+          color: it.color,
+          qty: Math.min(MAX_QTY, Math.max(1, parseInt(it.qty, 10) || 1))
+        }));
+    } catch (error) {
+      return [];
+    }
+  }
 
-      for (let i = 1; i <= 6; i++) {
-        const number = String(i).padStart(2, "0");
-        const productId = `${category.id}${i}`;
-        const productName = `${category.prefix} ${number}`;
-        const imageNumber = i;
+  function persistCart() {
+    try {
+      sessionStorage.setItem(CART_KEY, JSON.stringify(state.cart));
+    } catch (error) {
+      /* sessionStorage indisponível: a sacola continua a funcionar em memória */
+    }
+  }
 
-        const card = document.createElement("article");
-
-        card.className = "product-card";
-        card.dataset.id = productId;
-        card.dataset.name = productName;
-        card.dataset.category = category.name;
-        card.dataset.price = "0";
-
-        const imagePath = `imagens/${category.id === "camisas" ? "camisa" : category.id === "calcoes" ? "calcao" : category.id === "chapeus" ? "chapeu" : category.id === "conjuntos" ? "conjunto" : category.id === "sacolas" ? "sacola" : "camisola"}${imageNumber}.png`;
-
-        card.innerHTML = `
-          <div class="product-image">
-            <img
-              src="${imagePath}"
-              alt="${productName} FREESTYLE"
-              loading="lazy"
-              onerror="this.style.display='none';this.parentElement.classList.add('image-missing')"
-            >
-          </div>
-
-          <div class="product-info">
-            <span class="product-category">${category.name.toUpperCase()}</span>
-
-            <h3>${productName}</h3>
-
-            <p class="product-price">Preço a definir</p>
-
-            <label for="size-${productId}">Tamanho</label>
-            <select id="size-${productId}" class="product-size">
-              <option value="">Escolher tamanho</option>
-              <option>Único</option>
-              <option>S</option>
-              <option>M</option>
-              <option>L</option>
-              <option>XL</option>
-              <option>XXL</option>
-            </select>
-
-            <label for="color-${productId}">Cor</label>
-            <select id="color-${productId}" class="product-color">
-              <option value="">Escolher cor</option>
-              <option>Preto</option>
-              <option>Branco</option>
-              <option>Outra</option>
-            </select>
-
-            <label for="qty-${productId}">Quantidade</label>
-            <input
-              id="qty-${productId}"
-              type="number"
-              class="product-quantity"
-              min="1"
-              max="99"
-              value="1"
-            >
-
-            <button type="button" class="add-to-cart">
-              Adicionar à sacola
-            </button>
-          </div>
-        `;
-
-        grid.appendChild(card);
+  function cartTotals() {
+    let count = 0;
+    let sum = 0;
+    let priced = 0;
+    state.cart.forEach(it => {
+      const p = BY_ID[it.id];
+      count += it.qty;
+      if (p && p.price !== null) {
+        sum += p.price * it.qty;
+        priced += 1;
       }
+    });
+    return { count: count, sum: sum, priced: priced, lines: state.cart.length };
+  }
 
-      container.appendChild(section);
+  function totalText(t) {
+    if (t.lines === 0 || t.priced === 0) return "Preço sob consulta";
+    if (t.priced === t.lines) return formatPrice(t.sum);
+    return formatPrice(t.sum) + " + itens a confirmar";
+  }
+
+  function updateBadges(bump) {
+    const count = cartTotals().count;
+    ["bagCount", "cart-count", "floating-cart-count"].forEach(id => {
+      const el = $(id);
+      if (!el) return;
+      el.textContent = String(count);
+      if (bump) {
+        el.classList.remove("bump");
+        void el.offsetWidth;
+        el.classList.add("bump");
+      }
     });
   }
 
-  function showToast(message) {
-    const toast = $("#toast");
-
-    if (!toast) return;
-
-    toast.textContent = message;
-    toast.classList.add("show");
-
-    clearTimeout(showToast.timer);
-
-    showToast.timer = setTimeout(() => {
-      toast.classList.remove("show");
-    }, 2600);
-  }
-
-  function saveCart() {
-    sessionStorage.setItem(CART_KEY, JSON.stringify(cart));
-    renderCart();
-  }
-
-  function escapeHTML(value) {
-    return String(value).replace(/[&<>"']/g, char => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    })[char]);
-  }
-
-  function renderCart() {
-    const count = cart.reduce(
-      (total, product) => total + product.quantity,
-      0
-    );
-
-    const badge = $("#cart-count");
-
-    if (badge) {
-      badge.textContent = count;
+  function addToCart(id, size, color, qty) {
+    const existing = state.cart.find(it => it.id === id && it.size === size && it.color === color);
+    if (existing) {
+      existing.qty = Math.min(MAX_QTY, existing.qty + qty);
+    } else {
+      state.cart.push({ id: id, size: size, color: color, qty: Math.min(MAX_QTY, qty) });
     }
+    persistCart();
+    renderBag();
+    updateBadges(true);
+  }
 
-    const host = $("#cart-items");
-    const total = $("#cart-total");
-
-    if (!host) return;
-
-    if (cart.length === 0) {
-      host.innerHTML = `
-        <p class="empty-cart">
-          A tua sacola ainda está vazia.
-        </p>
-      `;
-
-      if (total) {
-        total.textContent = "A confirmar";
-      }
-
+  function changeQty(index, delta) {
+    const item = state.cart[index];
+    if (!item) return;
+    const next = item.qty + delta;
+    if (next < 1) {
+      removeFromCart(index);
       return;
     }
-
-    host.innerHTML = cart.map((product, index) => `
-      <article class="cart-line">
-        <div>
-          <strong>${escapeHTML(product.name)}</strong>
-
-          <small>
-            ${escapeHTML(product.category)}
-            · Tamanho: ${escapeHTML(product.size)}
-            · Cor: ${escapeHTML(product.color)}
-          </small>
-
-          <small>
-            Quantidade: ${product.quantity}
-          </small>
-        </div>
-
-        <button
-          type="button"
-          class="remove-item"
-          data-index="${index}"
-        >
-          Remover
-        </button>
-      </article>
-    `).join("");
-
-    if (total) {
-      total.textContent = "Preço a confirmar";
-    }
+    item.qty = Math.min(MAX_QTY, next);
+    persistCart();
+    renderBag();
+    updateBadges(false);
   }
 
-  function filterCategory(category, scroll = true) {
-    const sections = $$(".catalog-category");
-
-    $$(".filter-button").forEach(button => {
-      const active = button.dataset.filter === category;
-
-      button.classList.toggle("active", active);
-      button.setAttribute("aria-pressed", String(active));
-    });
-
-    sections.forEach(section => {
-      const show =
-        category === "todas" ||
-        section.dataset.category === category;
-
-      section.hidden = !show;
-    });
-
-    if (scroll) {
-      if (category === "todas") {
-        $("#categorias").scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-      } else {
-        const target = document.getElementById(category);
-
-        if (target) {
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-        }
-      }
-    }
+  function removeFromCart(index) {
+    if (!state.cart[index]) return;
+    state.cart.splice(index, 1);
+    persistCart();
+    renderBag();
+    updateBadges(false);
+    toast("Produto removido.");
   }
 
-  $("#catalog-filters")?.addEventListener("click", event => {
-    const button = event.target.closest("[data-filter]");
-
-    if (!button) return;
-
-    filterCategory(button.dataset.filter);
-  });
-
-  document.addEventListener("click", event => {
-    const addButton = event.target.closest(".add-to-cart");
-
-    if (addButton) {
-      const card = addButton.closest(".product-card");
-
-      if (!card) return;
-
-      const size = $(".product-size", card).value;
-      const color = $(".product-color", card).value;
-
-      if (!size) {
-        showToast("Escolhe o tamanho antes de adicionar.");
-        $(".product-size", card).focus();
-        return;
-      }
-
-      if (!color) {
-        showToast("Escolhe a cor antes de adicionar.");
-        $(".product-color", card).focus();
-        return;
-      }
-
-      const quantity = Math.max(
-        1,
-        Math.min(
-          99,
-          parseInt($(".product-quantity", card).value, 10) || 1
-        )
-      );
-
-      const product = {
-        id: card.dataset.id,
-        name: card.dataset.name,
-        category: card.dataset.category,
-        size,
-        color,
-        quantity
-      };
-
-      const existing = cart.find(item =>
-        item.id === product.id &&
-        item.size === product.size &&
-        item.color === product.color
-      );
-
-      if (existing) {
-        existing.quantity = Math.min(
-          99,
-          existing.quantity + quantity
-        );
-      } else {
-        cart.push(product);
-      }
-
-      saveCart();
-
-      showToast(`${product.name} adicionada à sacola.`);
+  function clearCart() {
+    if (state.cart.length === 0) {
+      toast("A sacola já está vazia.", "warning");
       return;
     }
+    state.cart = [];
+    persistCart();
+    renderBag();
+    updateBadges(false);
+    toast("Sacola esvaziada.");
+  }
 
-    const removeButton = event.target.closest(".remove-item");
+  /* ======================================================
+     8. SACOLA (interface)
+     ====================================================== */
+  function renderBag() {
+    if (!els.bagItems) return;
+    const t = cartTotals();
 
-    if (removeButton) {
-      const index = Number(removeButton.dataset.index);
+    if (els.bagEmpty) els.bagEmpty.hidden = state.cart.length > 0;
+    if (els.bagSummaryCount) els.bagSummaryCount.textContent = String(t.count);
+    if (els.bagTotal) els.bagTotal.textContent = totalText(t);
 
-      cart.splice(index, 1);
+    els.bagItems.innerHTML = state.cart.map((it, index) => {
+      const p = BY_ID[it.id];
+      const line = p.price !== null
+        ? formatPrice(p.price) + " x " + it.qty + " = " + formatPrice(p.price * it.qty)
+        : "Preço sob consulta";
+      return '<li class="bag-item">' +
+        '<img src="' + esc(p.image) + '" alt="' + esc(p.name) + ' FREESTYLE DREWP" loading="lazy">' +
+        '<div class="bag-item-info">' +
+          '<strong>' + esc(p.name) + '</strong>' +
+          '<small>' + esc(p.categoryName) + ' · Ref. ' + esc(p.code) + '</small>' +
+          '<small>Tamanho: ' + esc(it.size) + ' · Cor: ' + esc(it.color) + '</small>' +
+          '<span class="bag-item-price">' + esc(line) + '</span>' +
+          '<div class="bag-item-controls">' +
+            '<div class="qty" role="group" aria-label="Quantidade de ' + esc(p.name) + '">' +
+              '<button type="button" data-action="bag-dec" data-index="' + index + '" aria-label="Diminuir quantidade">&minus;</button>' +
+              '<span>' + it.qty + '</span>' +
+              '<button type="button" data-action="bag-inc" data-index="' + index + '" aria-label="Aumentar quantidade">+</button>' +
+            '</div>' +
+            '<button type="button" class="bag-remove" data-action="bag-remove" data-index="' + index + '">Retirar</button>' +
+          '</div>' +
+        '</div>' +
+      '</li>';
+    }).join("");
+  }
 
-      saveCart();
-
-      showToast("Artigo removido da sacola.");
-    }
-  });
-
-  $("#clear-cart")?.addEventListener("click", () => {
-    cart = [];
-
-    saveCart();
-
-    showToast("Sacola esvaziada.");
-  });
-
-  $("#checkout-button")?.addEventListener("click", () => {
-    if (cart.length === 0) {
-      showToast("Adiciona pelo menos um produto à sacola.");
-      return;
-    }
-
-    if (WHATSAPP_NUMBER.includes("X")) {
-      showToast("Configura primeiro o número de WhatsApp no script.js.");
-      return;
-    }
-
-    const productsMessage = cart.map(product =>
-      `• ${product.name}\n` +
-      `  Categoria: ${product.category}\n` +
-      `  Tamanho: ${product.size}\n` +
-      `  Cor: ${product.color}\n` +
-      `  Quantidade: ${product.quantity}`
-    ).join("\n\n");
-
-    const message =
-      `Olá, FREESTYLE DREWP!\n\n` +
-      `Quero fazer esta encomenda:\n\n` +
-      `${productsMessage}\n\n` +
-      `Podem confirmar os preços e a disponibilidade?`;
-
-    const whatsappURL =
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-
-    window.open(whatsappURL, "_blank");
-  });
-
-  const menu = $("#menu-toggle");
-  const navigation = $("#navigation");
-
-  menu?.addEventListener("click", () => {
-    const isOpen = navigation.classList.toggle("is-open");
-
-    menu.setAttribute("aria-expanded", String(isOpen));
-  });
-
-  navigation?.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      navigation.classList.remove("is-open");
-      menu?.setAttribute("aria-expanded", "false");
-    });
-  });
-
-  // Inicializar catálogo e sacola
-  createProducts();
-  renderCart();
-
-})();
+  /* ======================================================
+     9. CAMADAS (janela, sacola, sobreposição)
+     ====================================================== */
+  function syncLayers() {
+    const modalOpen = !!els.modal && !els.modal.hidden;
+    const bagOpen = !!els.drawer && els.drawer.classList.contains("is-open");
+    if (els.overlay) els.overlay.hidden = !
