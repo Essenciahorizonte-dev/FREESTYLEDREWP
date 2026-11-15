@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="Catálogo FREESTYLE DREWP. Camisas, calções, chapéus, sacolas e camisolas em várias cores.">
+  <title>Catálogo | FREESTYLE DREWP</title>
+  <link rel="icon" href="./imagens/logotipo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body data-page="catalogo">
+  <a class="skip-link" href="#catalogo">Saltar para o catálogo</a>
+
+  <!-- CABEÇALHO -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="FREESTYLE DREWP - Início">
+        <img class="brand-logo" src="./imagens/logotipo.png" alt="Logótipo FREESTYLE DREWP">
+        <span class="brand-text">Freestyle Drewp</span>
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+        <a href="index.html" data-page-link="inicio">Início</a>
+        <a href="catalogo.html" data-page-link="catalogo">Catálogo</a>
+        <a href="contacto.html" data-page-link="contacto">Contacto</a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="bag-button" id="bagButton" aria-label="Abrir sacola de compras" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 7h12l1 13H5L6 7z"></path>
+            <path d="M9 10V6a3 3 0 0 1 6 0v4"></path>
+          </svg>
+          <span class="bag-count" id="bagCount">0</span>
+        </button>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- TÍTULO DA PÁGINA -->
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Catálogo</p>
+        <h1 class="section-title">Escolhe o teu estilo</h1>
+        <p class="section-text">20 peças em 5 categorias. Cada peça muda de cor sozinha: toca numa bolinha para escolheres a tua.</p>
+      </div>
+    </section>
+
+    <!-- CATÁLOGO -->
+    <section class="section" id="catalogo">
+      <div class="container">
+        <div class="filters" id="categoryFilters" role="group" aria-label="Filtrar por categoria">
+          <button type="button" class="filter-btn is-active" data-category="todas" aria-pressed="true">Todas as peças</button>
+          <button type="button" class="filter-btn" data-category="camisa" aria-pressed="false">Camisas</button>
+          <button type="button" class="filter-btn" data-category="calcao" aria-pressed="false">Calções</button>
+          <button type="button" class="filter-btn" data-category="chapeu" aria-pressed="false">Chapéus</button>
+          <button type="button" class="filter-btn" data-category="sacola" aria-pressed="false">Sacolas</button>
+          <button type="button" class="filter-btn" data-category="camisola" aria-pressed="false">Camisolas</button>
+        </div>
+
+        <div class="toolbar">
+          <div class="search-box">
+            <label for="searchInput" class="visually-hidden">Pesquisar produtos</label>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="M20 20l-4-4"></path>
+            </svg>
+            <input type="search" id="searchInput" placeholder="Pesquisar por nome ou categoria" autocomplete="off">
+            <button type="button" class="search-clear" id="searchClear" aria-label="Limpar pesquisa" hidden>&times;</button>
+          </div>
+
+          <div class="sort-box">
+            <label for="sortSelect">Ordenar</label>
+            <select id="sortSelect">
+              <option value="todos">Todos</option>
+              <option value="recentes">Mais recentes</option>
+              <option value="alfabetica">Ordem alfabética</option>
+              <option value="preco-asc">Menor preço</option>
+              <option value="preco-desc">Maior preço</option>
+            </select>
+          </div>
+        </div>
+
+        <p class="result-count" id="resultCount" aria-live="polite"></p>
+
+        <div class="product-grid" id="productGrid"></div>
+
+        <div class="empty-state" id="emptyState" hidden>
+          <h3>Nenhum produto encontrado</h3>
+          <p>Não encontrámos peças para esta pesquisa. Tenta outro nome ou limpa a pesquisa.</p>
+          <button type="button" class="btn btn-primary" id="resetFilters">Limpar pesquisa</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="FREESTYLE DREWP - Início">
+          <img class="brand-logo" src="./imagens/logotipo.png" alt="Logótipo FREESTYLE DREWP">
+          <span class="brand-text">Freestyle Drewp</span>
+        </a>
+        <p>Moda urbana com atitude, personalidade e liberdade. O teu estilo. As tuas regras.</p>
+      </div>
+
+      <div>
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Categorias</h4>
+        <ul>
+          <li><a href="catalogo.html?categoria=camisa" data-go-category="camisa">Camisas</a></li>
+          <li><a href="catalogo.html?categoria=calcao" data-go-category="calcao">Calções</a></li>
+          <li><a href="catalogo.html?categoria=chapeu" data-go-category="chapeu">Chapéus</a></li>
+          <li><a href="catalogo.html?categoria=sacola" data-go-category="sacola">Sacolas</a></li>
+          <li><a href="catalogo.html?categoria=camisola" data-go-category="camisola">Camisolas</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a id="footerWhatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a id="footerInstagram" href="#" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a id="footerFacebook" href="#" target="_blank" rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; <span id="currentYear">2026</span> FREESTYLE DREWP. Todos os direitos reservados.</p>
+      <p>Criado por <strong>ESSÊNCIA HORIZONTE</strong></p>
+    </div>
+  </footer>
+
+  <!-- JANELA DE DETALHES -->
+  <div class="modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalName" hidden>
+    <div class="modal-box">
+      <button type="button" class="modal-close" id="modalClose" aria-label="Fechar detalhes">&times;</button>
+
+      <div class="modal-image">
+        <img id="modalImage" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="">
+      </div>
+
+      <div class="modal-info">
+        <p class="product-category" id="modalCategory"></p>
+        <h3 id="modalName"></h3>
+        <p class="product-code" id="modalId"></p>
+        <p class="modal-description" id="modalDescription"></p>
+        <p class="product-price" id="modalPrice"></p>
+        <p class="product-stock" id="modalStock"></p>
+
+        <div class="field">
+          <span class="field-label" id="modalColorLabel">Cor</span>
+          <div class="color-picker" id="modalColors" role="group" aria-labelledby="modalColorLabel"></div>
+          <p class="color-name" id="modalColorName" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label for="modalSize">Tamanho</label>
+          <select id="modalSize"></select>
+        </div>
+
+        <div class="field">
+          <span class="field-label" id="modalQtyLabel">Quantidade</span>
+          <div class="qty" role="group" aria-labelledby="modalQtyLabel">
+            <button type="button" id="modalQtyMinus" aria-label="Diminuir quantidade">&minus;</button>
+            <span id="modalQty" aria-live="polite">1</span>
+            <button type="button" id="modalQtyPlus" aria-label="Aumentar quantidade">+</button>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block" id="modalAdd">Adicionar à sacola</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SACOLA -->
+  <div class="overlay" id="overlay" hidden></div>
+
+  <aside class="bag-drawer" id="bagDrawer" aria-label="Sacola de compras" aria-hidden="true">
+    <div class="bag-head">
+      <h3>A tua sacola</h3>
+      <button type="button" class="modal-close static" id="bagClose" aria-label="Fechar sacola">&times;</button>
+    </div>
+
+    <div class="bag-body">
+      <p class="bag-empty" id="bagEmpty">A tua sacola está vazia. Explora o catálogo e escolhe as tuas peças.</p>
+      <ul class="bag-items" id="bagItems"></ul>
+    </div>
+
+    <div class="bag-foot">
+      <div class="bag-summary">
+        <div><span>Artigos</span><strong id="bagSummaryCount">0</strong></div>
+        <div><span>Total</span><strong id="bagTotal">Preço sob consulta</strong></div>
+      </div>
+      <button type="button" class="btn btn-primary btn-block" id="bagCheckout">Finalizar encomenda</button>
+      <div class="bag-secondary">
+        <button type="button" class="btn btn-outline" id="bagContinue">Continuar a comprar</button>
+        <button type="button" class="btn btn-outline" id="bagClear">Esvaziar sacola</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NOTIFICAÇÕES -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>

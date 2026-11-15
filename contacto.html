@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="Contacta a FREESTYLE DREWP pelo WhatsApp, telefone ou redes sociais.">
+  <title>Contacto | FREESTYLE DREWP</title>
+  <link rel="icon" href="./imagens/logotipo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body data-page="contacto">
+  <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
+
+  <!-- CABEÇALHO -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="FREESTYLE DREWP - Início">
+        <img class="brand-logo" src="./imagens/logotipo.png" alt="Logótipo FREESTYLE DREWP">
+        <span class="brand-text">Freestyle Drewp</span>
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+        <a href="index.html" data-page-link="inicio">Início</a>
+        <a href="catalogo.html" data-page-link="catalogo">Catálogo</a>
+        <a href="contacto.html" data-page-link="contacto">Contacto</a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="bag-button" id="bagButton" aria-label="Abrir sacola de compras" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 7h12l1 13H5L6 7z"></path>
+            <path d="M9 10V6a3 3 0 0 1 6 0v4"></path>
+          </svg>
+          <span class="bag-count" id="bagCount">0</span>
+        </button>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- TÍTULO DA PÁGINA -->
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Contacto</p>
+        <h1 class="section-title">Fala connosco</h1>
+        <p class="section-text">Gostaste de alguma peça? Confirma disponibilidade, pagamento e entrega directamente connosco.</p>
+      </div>
+    </section>
+
+    <!-- CONTACTOS -->
+    <section class="section">
+      <div class="container">
+        <div class="contact-grid">
+          <a class="contact-card" id="contactWhatsapp" href="#" target="_blank" rel="noopener">
+            <span class="contact-label">WhatsApp</span>
+            <span class="contact-value" id="contactWhatsappText">A configurar</span>
+          </a>
+          <a class="contact-card" id="contactPhone" href="#">
+            <span class="contact-label">Telefone</span>
+            <span class="contact-value" id="contactPhoneText">A configurar</span>
+          </a>
+          <a class="contact-card" id="contactInstagram" href="#" target="_blank" rel="noopener">
+            <span class="contact-label">Instagram</span>
+            <span class="contact-value" id="contactInstagramText">A configurar</span>
+          </a>
+          <a class="contact-card" id="contactFacebook" href="#" target="_blank" rel="noopener">
+            <span class="contact-label">Facebook</span>
+            <span class="contact-value" id="contactFacebookText">A configurar</span>
+          </a>
+          <div class="contact-card" id="contactLocation">
+            <span class="contact-label">Localização</span>
+            <span class="contact-value" id="contactLocationText">A configurar</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENSAGEM E PERGUNTAS FREQUENTES -->
+    <section class="section section-alt">
+      <div class="container contact-layout">
+        <div>
+          <h3>Envia-nos uma mensagem</h3>
+          <form class="form-box" id="contactForm" novalidate>
+            <div class="form-field">
+              <label for="formName">O teu nome</label>
+              <input type="text" id="formName" name="nome" autocomplete="name" placeholder="Escreve o teu nome">
+            </div>
+            <div class="form-field">
+              <label for="formSubject">Assunto</label>
+              <select id="formSubject" name="assunto">
+                <option value="">Escolher assunto</option>
+                <option value="Encomenda">Encomenda</option>
+                <option value="Disponibilidade">Disponibilidade</option>
+                <option value="Preços">Preços</option>
+                <option value="Entrega">Entrega</option>
+                <option value="Outro assunto">Outro assunto</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="formMessage">Mensagem</label>
+              <textarea id="formMessage" name="mensagem" placeholder="Escreve aqui a tua mensagem"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Enviar pelo WhatsApp</button>
+            <p class="form-note">A mensagem abre no teu WhatsApp, pronta a enviar.</p>
+          </form>
+        </div>
+
+        <div>
+          <h3>Perguntas frequentes</h3>
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>Como posso fazer uma encomenda?</summary>
+              <p>Escolhe as peças no catálogo, selecciona a cor e o tamanho, junta à sacola e finaliza a encomenda pelo WhatsApp.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Quais são os métodos de pagamento?</summary>
+              <p>Para conhecer os métodos de pagamento disponíveis, entra em contacto connosco pelo WhatsApp.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Como sei se uma peça está disponível?</summary>
+              <p>Envia a tua selecção pelo WhatsApp e a nossa equipa confirma a disponibilidade.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Posso escolher a cor e o tamanho?</summary>
+              <p>Sim. Cada peça mostra as cores em bolinhas e, nas roupas, podes escolher o tamanho antes de adicionar à sacola.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Como funciona a entrega?</summary>
+              <p>Contacta-nos pelo WhatsApp para saberes as condições e as zonas de entrega.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="FREESTYLE DREWP - Início">
+          <img class="brand-logo" src="./imagens/logotipo.png" alt="Logótipo FREESTYLE DREWP">
+          <span class="brand-text">Freestyle Drewp</span>
+        </a>
+        <p>Moda urbana com atitude, personalidade e liberdade. O teu estilo. As tuas regras.</p>
+      </div>
+
+      <div>
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Categorias</h4>
+        <ul>
+          <li><a href="catalogo.html?categoria=camisa" data-go-category="camisa">Camisas</a></li>
+          <li><a href="catalogo.html?categoria=calcao" data-go-category="calcao">Calções</a></li>
+          <li><a href="catalogo.html?categoria=chapeu" data-go-category="chapeu">Chapéus</a></li>
+          <li><a href="catalogo.html?categoria=sacola" data-go-category="sacola">Sacolas</a></li>
+          <li><a href="catalogo.html?categoria=camisola" data-go-category="camisola">Camisolas</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a id="footerWhatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a id="footerInstagram" href="#" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a id="footerFacebook" href="#" target="_blank" rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; <span id="currentYear">2026</span> FREESTYLE DREWP. Todos os direitos reservados.</p>
+      <p>Criado por <strong>ESSÊNCIA HORIZONTE</strong></p>
+    </div>
+  </footer>
+
+  <!-- SACOLA -->
+  <div class="overlay" id="overlay" hidden></div>
+
+  <aside class="bag-drawer" id="bagDrawer" aria-label="Sacola de compras" aria-hidden="true">
+    <div class="bag-head">
+      <h3>A tua sacola</h3>
+      <button type="button" class="modal-close static" id="bagClose" aria-label="Fechar sacola">&times;</button>
+    </div>
+
+    <div class="bag-body">
+      <p class="bag-empty" id="bagEmpty">A tua sacola está vazia. Explora o catálogo e escolhe as tuas peças.</p>
+      <ul class="bag-items" id="bagItems"></ul>
+    </div>
+
+    <div class="bag-foot">
+      <div class="bag-summary">
+        <div><span>Artigos</span><strong id="bagSummaryCount">0</strong></div>
+        <div><span>Total</span><strong id="bagTotal">Preço sob consulta</strong></div>
+      </div>
+      <button type="button" class="btn btn-primary btn-block" id="bagCheckout">Finalizar encomenda</button>
+      <div class="bag-secondary">
+        <button type="button" class="btn btn-outline" id="bagContinue">Continuar a comprar</button>
+        <button type="button" class="btn btn-outline" id="bagClear">Esvaziar sacola</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NOTIFICAÇÕES -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>
