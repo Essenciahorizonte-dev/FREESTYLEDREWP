@@ -1,3 +1,4 @@
+
 /* ==========================================================
    FREESTYLE DREWP - script.js (partilhado: Início, Catálogo, Contacto)
    Cores com troca automática, filtros, pesquisa, sacola e WhatsApp
@@ -31,7 +32,7 @@
   const AVAILABILITY = {
   };
 
-  // Cores por peça (opcional). Por omissão todas têm as 5 cores.
+  // Cores por peça (opcional). Por omissão todas têm as 6 cores.
   // Exemplo: chapeu1: ["azul", "branco"]
   const PRODUCT_COLORS = {
   };
@@ -41,7 +42,7 @@
   };
 
   // Peças em destaque na página Início
-  const FEATURED_IDS = ["camisa1", "calcao1", "chapeu1", "camisola1"];
+  const FEATURED_IDS = ["camisa1", "calsa1", "chapeu1", "camisola1"];
 
   const COLOR_INTERVAL = 3000; // troca de cor dos cartões (ms)
   const HERO_INTERVAL = 5000;  // troca dos fundos do Início (ms)
@@ -60,7 +61,8 @@
     { id: "branco", name: "Branco", hex: "#ffffff" },
     { id: "cinza", name: "Cinza", hex: "#9aa0ad" },
     { id: "preto", name: "Preto", hex: "#0a0a0f" },
-    { id: "rosa", name: "Rosa", hex: "#ff5fa2" }
+    { id: "rosa", name: "Rosa", hex: "#ff5fa2" },
+    { id: "vermelho", name: "Vermelho", hex: "#e11d2e" }
   ];
   const COLOR_BY_ID = {};
   COLORS.forEach(c => { COLOR_BY_ID[c.id] = c; });
@@ -70,7 +72,7 @@
 
   const CATEGORIES = [
     { id: "camisa", name: "Camisas", singular: "Camisa", code: "CAM", sizes: SIZES_FULL, tagline: "Expressa o teu estilo." },
-    { id: "calcao", name: "Calções", singular: "Calção", code: "CAL", sizes: SIZES_FULL, tagline: "Conforto e personalidade." },
+    { id: "calsa", name: "Calças", singular: "Calça", code: "CAL", sizes: SIZES_FULL, tagline: "Conforto e personalidade." },
     { id: "chapeu", name: "Chapéus", singular: "Chapéu", code: "CHA", sizes: SIZES_ONE, tagline: "O detalhe que completa o visual." },
     { id: "sacola", name: "Sacolas", singular: "Sacola", code: "SAC", sizes: SIZES_ONE, tagline: "Leva o teu estilo contigo." },
     { id: "camisola", name: "Camisolas", singular: "Camisola", code: "CMS", sizes: SIZES_FULL, tagline: "Conforto para todos os dias." }
@@ -136,8 +138,8 @@
   const priceText = p => (p.price !== null ? formatPrice(p.price) : "Preço sob consulta");
   const statusText = p => p.status || DEFAULT_STATUS;
   const isSoldOut = p => norm(p.status) === "esgotado";
-  /* Fotos das peças: aceita png, jpg, jpeg e webp (tenta pela ordem) */
-  const IMAGE_EXTENSIONS = ["png", "jpg", "jpeg", "webp"];
+  /* Fotos das peças: aceita jpg, png, jpeg e webp (tenta pela ordem) */
+  const IMAGE_EXTENSIONS = ["jpg", "png", "jpeg", "webp"];
   const extIndex = {};
   const imageFor = (p, colorId) => "imagens/" + p.id + "-" + colorId + "." +
     IMAGE_EXTENSIONS[extIndex[p.id + "-" + colorId] || 0];
@@ -606,5 +608,4 @@
       const line = p.price !== null
         ? formatPrice(p.price) + " x " + it.qty + " = " + formatPrice(p.price * it.qty)
         : "Preço sob consulta";
-      return '<li class="bag-item">' +
-        '<img src="' + esc(imageFor(p, it.co
+      return '<li class="bag-
