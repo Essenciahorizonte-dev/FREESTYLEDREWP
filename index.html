@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -121,47 +122,30 @@
         </header>
 
         <div class="category-grid">
-          <a class="category-tile" href="catalogo.html?categoria=camisa">
-            <img src="./imagens/camisa1-azul.jpg" alt="Categoria camisas FREESTYLE DREWP" loading="lazy">
+          <a class="category-tile" href="catalogo.html?categoria=camisa" data-category-tile="camisa" hidden>
+            <img data-category-image="camisa" alt="Categoria camisas FREESTYLE DREWP" loading="lazy">
             <span class="category-label"><strong>Camisas</strong><small>Expressa o teu estilo</small></span>
           </a>
-          <a class="category-tile" href="catalogo.html?categoria=calsa">
-            <img src="./imagens/calsa1-azul.jpg" alt="Categoria calças FREESTYLE DREWP" loading="lazy">
+          <a class="category-tile" href="catalogo.html?categoria=calsa" data-category-tile="calsa" hidden>
+            <img data-category-image="calsa" alt="Categoria calças FREESTYLE DREWP" loading="lazy">
             <span class="category-label"><strong>Calças</strong><small>Conforto e personalidade</small></span>
           </a>
-          <a class="category-tile" href="catalogo.html?categoria=chapeu">
-            <img src="./imagens/chapeu1-azul.jpg" alt="Categoria chapéus FREESTYLE DREWP" loading="lazy">
+          <a class="category-tile" href="catalogo.html?categoria=chapeu" data-category-tile="chapeu" hidden>
+            <img data-category-image="chapeu" alt="Categoria chapéus FREESTYLE DREWP" loading="lazy">
             <span class="category-label"><strong>Chapéus</strong><small>O detalhe que completa o visual</small></span>
           </a>
-          <a class="category-tile" href="catalogo.html?categoria=sacola">
-            <img src="./imagens/sacola1-azul.jpg" alt="Categoria sacolas FREESTYLE DREWP" loading="lazy">
+          <a class="category-tile" href="catalogo.html?categoria=sacola" data-category-tile="sacola" hidden>
+            <img data-category-image="sacola" alt="Categoria sacolas FREESTYLE DREWP" loading="lazy">
             <span class="category-label"><strong>Sacolas</strong><small>Leva o teu estilo contigo</small></span>
           </a>
-          <a class="category-tile" href="catalogo.html?categoria=camisola">
-            <img src="./imagens/camisola1-azul.jpg" alt="Categoria camisolas FREESTYLE DREWP" loading="lazy">
+          <a class="category-tile" href="catalogo.html?categoria=camisola" data-category-tile="camisola" hidden>
+            <img data-category-image="camisola" alt="Categoria camisolas FREESTYLE DREWP" loading="lazy">
             <span class="category-label"><strong>Camisolas</strong><small>Conforto para todos os dias</small></span>
           </a>
         </div>
 
         <div class="section-cta">
           <a class="btn btn-outline" href="catalogo.html">Todas as peças</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- PEÇAS EM DESTAQUE -->
-    <section class="section section-alt" id="destaques">
-      <div class="container">
-        <header class="section-head">
-          <p class="eyebrow">Escolhas Freestyle</p>
-          <h2 class="section-title">Peças em destaque</h2>
-          <p class="section-text">Cada peça muda de cor sozinha. Toca numa bolinha para escolheres a tua.</p>
-        </header>
-
-        <div class="product-grid" id="featuredGrid"></div>
-
-        <div class="section-cta">
-          <a class="btn btn-graphite" href="catalogo.html">Ver todo o catálogo</a>
         </div>
       </div>
     </section>
@@ -275,35 +259,5 @@
       <p>Criado por <strong>ESSÊNCIA HORIZONTE</strong></p>
     </div>
   </footer>
-
-  <!-- SACOLA -->
-  <div class="overlay" id="overlay" hidden></div>
-
-  <aside class="bag-drawer" id="bagDrawer" aria-label="Sacola de compras" aria-hidden="true">
-    <div class="bag-head">
-      <h3>A tua sacola</h3>
-      <button type="button" class="modal-close static" id="bagClose" aria-label="Fechar sacola">&times;</button>
-    </div>
-
-    <div class="bag-body">
-      <p class="bag-empty" id="bagEmpty">A tua sacola está vazia. Explora o catálogo e escolhe as tuas peças.</p>
-      <ul class="bag-items" id="bagItems"></ul>
-    </div>
-
-    <div class="bag-foot">
-      <div class="bag-summary">
-        <div><span>Artigos</span><strong id="bagSummaryCount">0</strong></div>
-        <div><span>Total</span><strong id="bagTotal">Preço sob consulta</strong></div>
-      </div>
-      <button type="button" class="btn btn-whatsapp btn-block" id="bagCheckout">Finalizar encomenda</button>
-      <div class="bag-secondary">
-        <button type="button" class="btn btn-outline" id="bagContinue">Continuar a comprar</button>
-        <button type="button" class="btn btn-outline" id="bagClear">Esvaziar sacola</button>
-      </div>
-    </div>
-  </aside>
-
-  <!-- NOTIFICAÇÕES -->
-  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
 </body>
 </html>
