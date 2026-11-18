@@ -1,3 +1,4 @@
+
 /* ==========================================================
    FREESTYLE DREWP - script.js (partilhado: Início, Catálogo, Contacto)
    Cores com troca automática, filtros, pesquisa, sacola e WhatsApp
@@ -9,55 +10,33 @@
      1. CONFIGURAÇÃO (edita aqui)
      ====================================================== */
   const CONFIG = {
-    // Número oficial de WhatsApp, só dígitos, com indicativo (258 = Moçambique)
     whatsapp: "258861697479",
-    // Telefone para chamadas. Exemplo: "258841234567". Vazio = "A configurar"
     phone: "",
-    // Instagram: @utilizador ou endereço completo. Vazio = "A configurar"
     instagram: "",
-    // Facebook: nome da página ou endereço completo. Vazio = "A configurar"
     facebook: "",
-    // Localização em texto. Exemplo: "Maputo". Vazio = "A configurar"
     location: "",
-    // Moeda mostrada nos preços
     currency: "MT"
   };
 
-  // Preços reais por peça. Vazio = "Preço sob consulta". Exemplo: camisa1: 1500
-  const PRICES = {
-  };
+  const PRICES = {};
+  const AVAILABILITY = {};
+  const PRODUCT_COLORS = {};
+  const PRODUCT_NAMES = {};
 
-  // Disponibilidade por peça (opcional). Exemplo: chapeu2: "Esgotado"
-  const AVAILABILITY = {
-  };
-
-  // Cores por peça (opcional). Por omissão todas têm as 7 cores.
-  // Exemplo: chapeu1: ["azul", "branco"]
-  const PRODUCT_COLORS = {
-  };
-
-  // Nomes por peça (opcional). Exemplo: camisa1: "Camisa Street"
-  const PRODUCT_NAMES = {
-  };
-
-  // Peças em destaque na página Início
   const FEATURED_IDS = ["camisa1", "calsa1", "chapeu1", "camisola1"];
 
-  const COLOR_INTERVAL = 3000; // troca de cor dos cartões (ms)
-  const HERO_INTERVAL = 5000;  // troca dos fundos do Início (ms)
-  const SHOWCASE_INTERVAL = 4000; // troca das Novidades no Início (ms)
-  const PRODUCTS_PER_CATEGORY = 4; // camisas: 5 camisas + 5 polos (ver abaixo)
+  const COLOR_INTERVAL = 3000;
+  const HERO_INTERVAL = 5000;
+  const SHOWCASE_INTERVAL = 4000;
+  const PRODUCTS_PER_CATEGORY = 4;
 
   /* ======================================================
      2. DADOS
-     Imagens: imagens/<peça>-<cor>.png ou .jpg  (ex.: imagens/chapeu1-azul.jpg)
      ====================================================== */
   const CART_KEY = "freestyle_drewp_sacola_v3";
   const MAX_QTY = 99;
   const DEFAULT_STATUS = "Disponibilidade sob confirmação";
 
-  /* As 3 primeiras cores aparecem em destaque nas bolinhas;
-     as restantes aparecem ao deslizar. A ordem aqui é a ordem das bolinhas. */
   const COLORS = [
     { id: "branco", name: "Branco", hex: "#ffffff" },
     { id: "preto", name: "Preto", hex: "#0a0a0f" },
@@ -67,6 +46,7 @@
     { id: "castanho", name: "Castanho", hex: "#7a4b2a" },
     { id: "cinza", name: "Cinza", hex: "#9aa0ad" }
   ];
+
   const COLOR_BY_ID = {};
   COLORS.forEach(c => { COLOR_BY_ID[c.id] = c; });
 
@@ -75,8 +55,8 @@
 
   const CATEGORIES = [
     {
-      id: "camisa", name: "Camisas", singular: "Camisa", code: "CAM", sizes: SIZES_FULL, tagline: "Expressa o teu estilo.",
-      /* 10 peças: 5 camisas normais (camisa1 a camisa5) + 5 polos (polo1 a polo5) */
+      id: "camisa", name: "Camisas", singular: "Camisa", code: "CAM", sizes: SIZES_FULL,
+      tagline: "Expressa o teu estilo.",
       lines: [
         { prefix: "camisa", singular: "Camisa", code: "CAM", count: 5 },
         { prefix: "polo", singular: "Polo", code: "POL", count: 5 }
@@ -95,23 +75,26 @@
     const lines = cat.lines || [
       { prefix: cat.id, singular: cat.singular, code: cat.code, count: PRODUCTS_PER_CATEGORY }
     ];
+
     lines.forEach(line => {
       for (let i = 1; i <= line.count; i++) {
         orderCounter += 1;
         const id = line.prefix + i;
         const num = String(i).padStart(2, "0");
         const name = PRODUCT_NAMES[id] || (line.singular + " " + num);
-        const colors = (PRODUCT_COLORS[id] || COLORS.map(c => c.id)).filter(c => COLOR_BY_ID[c]);
+        const colors = (PRODUCT_COLORS[id] || COLORS.map(c => c.id))
+          .filter(c => COLOR_BY_ID[c]);
+
         PRODUCTS.push({
-          id: id,
+          id,
           categoryId: cat.id,
           categoryName: cat.name,
-          name: name,
+          name,
           code: "FD-" + line.code + "-" + num,
-          description: name + " da colecção FREESTYLE DREWP. " + cat.tagline +
-            " Escolhe a cor e o tamanho e confirma preço e disponibilidade pelo WhatsApp.",
+          description: name + " da colecção FREESTYLE DREWP. " +
+            cat.tagline + " Escolhe a cor e o tamanho e confirma preço e disponibilidade pelo WhatsApp.",
           sizes: cat.sizes,
-          colors: colors,
+          colors,
           missing: {},
           order: orderCounter,
           price: typeof PRICES[id] === "number" ? PRICES[id] : null,
@@ -153,11 +136,13 @@
   const priceText = p => (p.price !== null ? formatPrice(p.price) : "Preço sob consulta");
   const statusText = p => p.status || DEFAULT_STATUS;
   const isSoldOut = p => norm(p.status) === "esgotado";
-  /* Fotos das peças: aceita jpg, png, jpeg e webp (tenta pela ordem) */
+
   const IMAGE_EXTENSIONS = ["jpg", "png", "jpeg", "webp"];
   const extIndex = {};
+
   const imageFor = (p, colorId) => "imagens/" + p.id + "-" + colorId + "." +
     IMAGE_EXTENSIONS[extIndex[p.id + "-" + colorId] || 0];
+
   const availableColors = p => p.colors.filter(c => !p.missing[c]);
 
   function formatPhone(n) {
@@ -168,6 +153,7 @@
   }
 
   const imgCache = {};
+
   function loadImage(src) {
     if (!imgCache[src]) {
       imgCache[src] = new Promise(resolve => {
@@ -180,10 +166,10 @@
     return imgCache[src];
   }
 
-  /* Procura a foto de uma cor em png, jpg, jpeg e webp */
   function probeColor(p, colorId) {
     const key = p.id + "-" + colorId;
     let i = extIndex[key] || 0;
+
     function tryNext() {
       if (i >= IMAGE_EXTENSIONS.length) return Promise.resolve(false);
       extIndex[key] = i;
@@ -253,13 +239,16 @@
     lastFocus: null
   };
 
-  const cardState = {};         // por peça: { color, locked }
-  const visibleIds = new Set(); // cartões visíveis no ecrã
+  const cardState = {};
+  const visibleIds = new Set();
   const sliderRefreshers = [];
 
   function getState(id) {
     if (!cardState[id]) {
-      cardState[id] = { color: availableColors(BY_ID[id])[0] || "", locked: false };
+      cardState[id] = {
+        color: availableColors(BY_ID[id])[0] || "",
+        locked: false
+      };
     }
     return cardState[id];
   }
@@ -269,6 +258,7 @@
      ====================================================== */
   function toast(message, type) {
     if (!els.toasts) return;
+
     const el = document.createElement("div");
     el.className = "toast" + (type === "warning" ? " is-warning" : "");
     el.setAttribute("role", "status");
@@ -282,9 +272,12 @@
     requestAnimationFrame(() => {
       requestAnimationFrame(() => el.classList.add("is-visible"));
     });
+
     setTimeout(() => {
       el.classList.remove("is-visible");
-      setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 350);
+      setTimeout(() => {
+        if (el.parentNode) el.parentNode.removeChild(el);
+      }, 350);
     }, 2800);
   }
 
@@ -293,9 +286,11 @@
      ====================================================== */
   function dotsHTML(p) {
     const st = getState(p.id);
+
     return availableColors(p).map(cid => {
       const c = COLOR_BY_ID[cid];
       const active = cid === st.color;
+
       return '<button type="button" class="color-dot' + (active ? ' is-active' : '') + '" ' +
         'style="--dot:' + c.hex + '" data-action="pick-color" data-id="' + p.id + '" data-color="' + cid + '" ' +
         'aria-label="Cor ' + esc(c.name) + '" aria-pressed="' + active + '"></button>';
@@ -310,16 +305,17 @@
   function samePicker(picker, list) {
     const dots = picker.querySelectorAll(".color-dot");
     if (dots.length !== list.length) return false;
+
     for (let i = 0; i < list.length; i++) {
       if (dots[i].dataset.color !== list[i]) return false;
     }
     return true;
   }
 
-  /* Actualiza as bolinhas sem as refazer (assim a posição do deslize não se perde) */
   function syncPicker(picker, p) {
     const st = getState(p.id);
     const list = availableColors(p);
+
     if (!samePicker(picker, list)) {
       picker.innerHTML = dotsHTML(p);
     } else {
@@ -329,29 +325,36 @@
         d.setAttribute("aria-pressed", String(active));
       });
     }
+
     const slider = picker.closest ? picker.closest(".color-slider") : null;
     if (slider) slider.dataset.many = String(list.length > 3);
   }
 
-  /* Na troca automática, desliza as bolinhas para mostrar a cor activa */
   function revealActive(picker) {
     if (!picker || !picker.scrollTo) return;
+
     const dots = Array.prototype.slice.call(picker.querySelectorAll(".color-dot"));
     const index = dots.findIndex(d => d.classList.contains("is-active"));
     if (index < 0 || !dots[0]) return;
+
     const slot = dots[0].offsetWidth || 38;
-    picker.scrollTo({ left: Math.floor(index / 3) * 3 * slot, behavior: "smooth" });
+    picker.scrollTo({
+      left: Math.floor(index / 3) * 3 * slot,
+      behavior: "smooth"
+    });
   }
 
   function refreshCard(id, reveal) {
     const p = BY_ID[id];
     const st = getState(id);
+
     if (st.color && p.missing[st.color]) st.color = availableColors(p)[0] || "";
     const label = colorLabel(p);
 
     document.querySelectorAll('.product-card[data-id="' + id + '"]').forEach(card => {
       const picker = card.querySelector(".color-picker");
       const name = card.querySelector(".color-name");
+
       if (picker) {
         syncPicker(picker, p);
         if (reveal) revealActive(picker);
@@ -368,10 +371,12 @@
   function swapImages(id, colorId) {
     const p = BY_ID[id];
     const src = imageFor(p, colorId);
-    const alt = p.name + " - " + COLOR_BY_ID[colorId].name + " - " + p.categoryName + " FREESTYLE DREWP";
+    const alt = p.name + " - " + COLOR_BY_ID[colorId].name +
+      " - " + p.categoryName + " FREESTYLE DREWP";
 
     document.querySelectorAll('.product-card[data-id="' + id + '"] .product-img').forEach(img => {
       img.classList.add("is-fading");
+
       setTimeout(() => {
         delete img.dataset.fallback;
         img.dataset.color = colorId;
@@ -391,6 +396,7 @@
   function showColor(id, colorId, manual) {
     const p = BY_ID[id];
     if (!p || !COLOR_BY_ID[colorId]) return;
+
     const st = getState(id);
 
     probeColor(p, colorId).then(ok => {
@@ -400,6 +406,7 @@
         if (manual) toast("A imagem desta cor ainda não está disponível.", "warning");
         return;
       }
+
       st.color = colorId;
       swapImages(id, colorId);
       refreshCard(id, !manual);
@@ -407,19 +414,24 @@
   }
 
   function pickColor(id, colorId) {
-    getState(id).locked = true; /* a escolha da pessoa pára a troca automática */
+    getState(id).locked = true;
     showColor(id, colorId, true);
   }
 
   function colorTick() {
     if (document.hidden) return;
+
     Array.from(visibleIds).forEach((id, i) => {
       const p = BY_ID[id];
       const st = cardState[id];
+
       if (!p || !st || st.locked) return;
+
       const list = availableColors(p);
       if (list.length < 2) return;
+
       const next = list[(list.indexOf(st.color) + 1) % list.length];
+
       setTimeout(() => {
         if (!cardState[id].locked) showColor(id, next, false);
       }, i * 160);
@@ -427,13 +439,17 @@
   }
 
   let cardObserver = null;
+
   function observeCards() {
     visibleIds.clear();
+
     const cards = document.querySelectorAll(".product-card");
+
     if (!("IntersectionObserver" in window)) {
       cards.forEach(c => visibleIds.add(c.dataset.id));
       return;
     }
+
     if (!cardObserver) {
       cardObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
@@ -445,28 +461,35 @@
     } else {
       cardObserver.disconnect();
     }
+
     cards.forEach(c => cardObserver.observe(c));
   }
 
   function handleProductImgError(img) {
     const p = BY_ID[img.dataset.pid];
+
     if (!p) {
       img.dataset.fallback = "1";
       img.src = PLACEHOLDER;
       return;
     }
+
     if (img.dataset.color) {
       const key = p.id + "-" + img.dataset.color;
       const nextExt = (extIndex[key] || 0) + 1;
+
       if (nextExt < IMAGE_EXTENSIONS.length) {
         extIndex[key] = nextExt;
         img.src = imageFor(p, img.dataset.color);
         return;
       }
+
       p.missing[img.dataset.color] = true;
     }
+
     const st = getState(p.id);
     const next = availableColors(p)[0];
+
     if (next) {
       st.color = next;
       img.dataset.color = next;
@@ -476,14 +499,13 @@
       img.dataset.fallback = "1";
       img.src = PLACEHOLDER;
     }
+
     refreshCard(p.id);
   }
 
   /* ======================================================
-     7. FUNDO DO INÍCIO (3 imagens que se trocam sozinhas)
+     7. FUNDO DO INÍCIO
      ====================================================== */
-  /* Slider automático e robusto: só mostra imagens realmente carregadas
-     e volta a incluir sozinho as que chegarem mais tarde. */
   function createSlider(selector, dotsId, interval) {
     const slides = Array.prototype.slice.call(document.querySelectorAll(selector));
     if (slides.length === 0) return;
@@ -493,6 +515,7 @@
     let timer = null;
 
     const isLoaded = s => s.complete && s.naturalWidth > 0;
+
     const loadedList = () => slides.map((s, i) => i).filter(i => {
       if (isLoaded(slides[i])) {
         slides[i].classList.remove("is-missing");
@@ -504,6 +527,7 @@
     function show(index) {
       current = index;
       slides.forEach((s, i) => s.classList.toggle("is-active", i === index));
+
       if (dotsBox) {
         Array.prototype.forEach.call(dotsBox.children, (d, i) => {
           d.classList.toggle("is-active", i === index);
@@ -515,22 +539,28 @@
     function next() {
       const list = loadedList();
       if (list.length === 0) return;
+
       const pos = list.indexOf(current);
       show(list[(pos + 1) % list.length]);
     }
 
     function restart() {
       clearInterval(timer);
-      timer = setInterval(() => { if (!document.hidden) next(); }, interval);
+      timer = setInterval(() => {
+        if (!document.hidden) next();
+      }, interval);
     }
 
     if (dotsBox) {
       dotsBox.innerHTML = slides.map((s, i) =>
-        '<button type="button" class="hero-dot" data-index="' + i + '" aria-label="Mostrar imagem ' + (i + 1) + '"></button>'
+        '<button type="button" class="hero-dot" data-index="' + i +
+        '" aria-label="Mostrar imagem ' + (i + 1) + '"></button>'
       ).join("");
+
       dotsBox.addEventListener("click", event => {
         const btn = event.target.closest("[data-index]");
         if (!btn) return;
+
         show(Number(btn.dataset.index));
         restart();
       });
@@ -552,6 +582,7 @@
     try {
       const raw = JSON.parse(sessionStorage.getItem(CART_KEY) || "[]");
       if (!Array.isArray(raw)) return [];
+
       return raw
         .filter(it => it && BY_ID[it.id] && COLOR_BY_ID[it.color] && typeof it.size === "string")
         .map(it => ({
@@ -577,15 +608,18 @@
     let count = 0;
     let sum = 0;
     let priced = 0;
+
     state.cart.forEach(it => {
       const p = BY_ID[it.id];
       count += it.qty;
+
       if (p && p.price !== null) {
         sum += p.price * it.qty;
         priced += 1;
       }
     });
-    return { count: count, sum: sum, priced: priced, lines: state.cart.length };
+
+    return { count, sum, priced, lines: state.cart.length };
   }
 
   function totalText(t) {
@@ -597,7 +631,9 @@
   function updateBadges(bump) {
     const el = $("bagCount");
     if (!el) return;
+
     el.textContent = String(cartTotals().count);
+
     if (bump) {
       el.classList.remove("bump");
       void el.offsetWidth;
@@ -606,12 +642,21 @@
   }
 
   function addToCart(id, color, size, qty) {
-    const existing = state.cart.find(it => it.id === id && it.color === color && it.size === size);
+    const existing = state.cart.find(it =>
+      it.id === id && it.color === color && it.size === size
+    );
+
     if (existing) {
       existing.qty = Math.min(MAX_QTY, existing.qty + qty);
     } else {
-      state.cart.push({ id: id, color: color, size: size, qty: Math.min(MAX_QTY, qty) });
+      state.cart.push({
+        id,
+        color,
+        size,
+        qty: Math.min(MAX_QTY, qty)
+      });
     }
+
     persistCart();
     renderBag();
     updateBadges(true);
@@ -620,11 +665,14 @@
   function changeQty(index, delta) {
     const item = state.cart[index];
     if (!item) return;
+
     const next = item.qty + delta;
+
     if (next < 1) {
       removeFromCart(index);
       return;
     }
+
     item.qty = Math.min(MAX_QTY, next);
     persistCart();
     renderBag();
@@ -633,6 +681,7 @@
 
   function removeFromCart(index) {
     if (!state.cart[index]) return;
+
     state.cart.splice(index, 1);
     persistCart();
     renderBag();
@@ -645,6 +694,7 @@
       toast("A sacola já está vazia.", "warning");
       return;
     }
+
     state.cart = [];
     persistCart();
     renderBag();
@@ -657,6 +707,7 @@
      ====================================================== */
   function renderBag() {
     if (!els.bagItems) return;
+
     const t = cartTotals();
 
     if (els.bagEmpty) els.bagEmpty.hidden = state.cart.length > 0;
@@ -666,11 +717,14 @@
     els.bagItems.innerHTML = state.cart.map((it, index) => {
       const p = BY_ID[it.id];
       const c = COLOR_BY_ID[it.color];
+
       const line = p.price !== null
         ? formatPrice(p.price) + " x " + it.qty + " = " + formatPrice(p.price * it.qty)
         : "Preço sob consulta";
+
       return '<li class="bag-item">' +
-        '<img src="' + esc(imageFor(p, it.color)) + '" alt="' + esc(p.name) + ' ' + esc(c.name) + ' FREESTYLE DREWP" loading="lazy">' +
+        '<img src="' + esc(imageFor(p, it.color)) + '" alt="' +
+        esc(p.name) + ' ' + esc(c.name) + ' FREESTYLE DREWP" loading="lazy">' +
         '<div class="bag-item-info">' +
           '<strong>' + esc(p.name) + '</strong>' +
           '<small>' + esc(p.categoryName) + ' · Ref. ' + esc(p.code) + '</small>' +
@@ -692,30 +746,39 @@
   function syncLayers() {
     const modalOpen = !!els.modal && !els.modal.hidden;
     const bagOpen = !!els.drawer && els.drawer.classList.contains("is-open");
+
     if (els.overlay) els.overlay.hidden = !(modalOpen || bagOpen);
     document.body.classList.toggle("no-scroll", modalOpen || bagOpen);
   }
 
   function openBag() {
     if (!els.drawer) return;
+
     closeMenu();
     state.lastFocus = document.activeElement;
     els.drawer.classList.add("is-open");
     els.drawer.setAttribute("aria-hidden", "false");
+
     if (els.bagButton) els.bagButton.setAttribute("aria-expanded", "true");
+
     syncLayers();
     if (els.bagClose) setTimeout(() => els.bagClose.focus(), 60);
   }
 
   function closeBag() {
     if (!els.drawer) return;
+
     els.drawer.classList.remove("is-open");
     els.drawer.setAttribute("aria-hidden", "true");
+
     if (els.bagButton) els.bagButton.setAttribute("aria-expanded", "false");
+
     syncLayers();
+
     if (location.hash === "#sacola" && window.history && history.replaceState) {
       history.replaceState(null, "", location.pathname + location.search);
     }
+
     if (state.lastFocus && typeof state.lastFocus.focus === "function") {
       state.lastFocus.focus();
     }
@@ -738,20 +801,23 @@
     delete els.modalImage.dataset.fallback;
     els.modalImage.src = st.color ? imageFor(p, st.color) : PLACEHOLDER;
     els.modalImage.alt = p.name + " - " + p.categoryName + " FREESTYLE DREWP";
+
     els.modalCategory.textContent = p.categoryName.toUpperCase();
     els.modalName.textContent = p.name;
     els.modalId.textContent = "Ref. " + p.code;
     els.modalDescription.textContent = p.description;
     els.modalPrice.textContent = priceText(p);
     els.modalStock.textContent = statusText(p);
+
     if (els.modalColors) els.modalColors.innerHTML = dotsHTML(p);
     if (els.modalColorName) els.modalColorName.textContent = colorLabel(p);
 
     els.modalSize.innerHTML = '<option value="">Escolher tamanho</option>' +
       p.sizes.map(s => '<option value="' + esc(s) + '">' + esc(s) + '</option>').join("");
-    if (p.sizes.length === 1) els.modalSize.value = p.sizes[0];
-    els.modalSize.classList.remove("is-invalid");
 
+    if (p.sizes.length === 1) els.modalSize.value = p.sizes[0];
+
+    els.modalSize.classList.remove("is-invalid");
     els.modalQty.textContent = "1";
     els.modalAdd.disabled = isSoldOut(p);
     els.modalAdd.textContent = isSoldOut(p) ? "Esgotado" : "Adicionar à sacola";
@@ -761,6 +827,7 @@
 
     const box = els.modal.querySelector(".modal-box");
     if (box) box.scrollTop = 0;
+
     setTimeout(() => els.modalClose.focus(), 60);
 
     if (fromQuickAdd && !isSoldOut(p)) {
@@ -770,9 +837,11 @@
 
   function closeModal() {
     if (!els.modal || els.modal.hidden) return;
+
     els.modal.hidden = true;
     state.modalProduct = null;
     syncLayers();
+
     if (state.lastFocus && typeof state.lastFocus.focus === "function") {
       state.lastFocus.focus();
     }
@@ -786,18 +855,22 @@
   function modalAddToBag() {
     const p = state.modalProduct;
     if (!p) return;
+
     if (isSoldOut(p)) {
       toast("Este produto está esgotado.", "warning");
       return;
     }
+
     const color = getState(p.id).color;
     const size = els.modalSize.value;
+
     els.modalSize.classList.toggle("is-invalid", !size);
 
     if (!color) {
       toast("Ainda não há imagens desta peça.", "warning");
       return;
     }
+
     if (!size) {
       toast("Escolhe o tamanho antes de adicionar.", "warning");
       els.modalSize.focus();
@@ -812,12 +885,15 @@
   function quickAdd(id) {
     const p = BY_ID[id];
     if (!p) return;
+
     if (isSoldOut(p)) {
       toast("Este produto está esgotado.", "warning");
       return;
     }
+
     const st = getState(id);
     st.locked = true;
+
     if (p.sizes.length === 1 && st.color) {
       addToCart(id, st.color, p.sizes[0], 1);
       toast("Produto adicionado à sacola.");
@@ -831,9 +907,12 @@
      ====================================================== */
   function sliderHTML(p) {
     const many = availableColors(p).length > 3;
+
     return '<div class="color-slider" data-many="' + many + '" data-id="' + p.id + '">' +
       '<button type="button" class="color-nav" data-action="colors-prev" data-id="' + p.id + '" aria-label="Ver cores anteriores">&lsaquo;</button>' +
-      '<div class="color-picker" role="group" aria-label="Cores de ' + esc(p.name) + '">' + dotsHTML(p) + '</div>' +
+      '<div class="color-picker" role="group" aria-label="Cores de ' + esc(p.name) + '">' +
+        dotsHTML(p) +
+      '</div>' +
       '<button type="button" class="color-nav" data-action="colors-next" data-id="' + p.id + '" aria-label="Ver mais cores">&rsaquo;</button>' +
     '</div>';
   }
@@ -842,21 +921,31 @@
     const st = getState(p.id);
     const soldOut = isSoldOut(p);
     const src = st.color ? imageFor(p, st.color) : PLACEHOLDER;
-    const alt = p.name + (st.color ? " - " + COLOR_BY_ID[st.color].name : "") + " - " + p.categoryName + " FREESTYLE DREWP";
-    const img = '<img class="product-img" src="' + esc(src) + '" alt="' + esc(alt) + '" ' +
-      'data-pid="' + p.id + '" data-color="' + esc(st.color) + '" loading="lazy" decoding="async">';
+
+    const alt = p.name + (st.color ? " - " + COLOR_BY_ID[st.color].name : "") +
+      " - " + p.categoryName + " FREESTYLE DREWP";
+
+    const img = '<img class="product-img" src="' + esc(src) + '" alt="' +
+      esc(alt) + '" data-pid="' + p.id + '" data-color="' +
+      esc(st.color) + '" loading="lazy" decoding="async">';
+
     const link = "catalogo.html?categoria=" + p.categoryId + "#product-" + p.id;
 
     const media = variant === "link"
-      ? '<a class="product-media" href="' + link + '" aria-label="Ver ' + esc(p.name) + ' no catálogo">' + img + '</a>'
-      : '<button type="button" class="product-media" data-action="details" data-id="' + p.id + '" aria-label="Ver detalhes de ' + esc(p.name) + '">' + img + '</button>';
+      ? '<a class="product-media" href="' + link + '" aria-label="Ver ' +
+        esc(p.name) + ' no catálogo">' + img + '</a>'
+      : '<button type="button" class="product-media" data-action="details" data-id="' +
+        p.id + '" aria-label="Ver detalhes de ' + esc(p.name) + '">' + img + '</button>';
 
     const actions = variant === "link"
-      ? '<div class="card-actions single"><a class="btn btn-graphite btn-sm" href="' + link + '">Ver no catálogo</a></div>'
+      ? '<div class="card-actions single"><a class="btn btn-graphite btn-sm" href="' +
+        link + '">Ver no catálogo</a></div>'
       : '<div class="card-actions">' +
-          '<button type="button" class="btn btn-outline btn-sm" data-action="details" data-id="' + p.id + '">Ver detalhes</button>' +
-          '<button type="button" class="btn btn-primary btn-sm" data-action="quick-add" data-id="' + p.id + '"' + (soldOut ? ' disabled' : '') + '>' +
-            (soldOut ? 'Esgotado' : 'Adicionar à sacola') + '</button>' +
+          '<button type="button" class="btn btn-outline btn-sm" data-action="details" data-id="' +
+          p.id + '">Ver detalhes</button>' +
+          '<button type="button" class="btn btn-primary btn-sm" data-action="quick-add" data-id="' +
+          p.id + '"' + (soldOut ? ' disabled' : '') + '>' +
+          (soldOut ? 'Esgotado' : 'Adicionar à sacola') + '</button>' +
         '</div>';
 
     return '<article class="product-card" id="product-' + p.id + '" data-id="' + p.id + '">' +
@@ -880,6 +969,7 @@
     const list = PRODUCTS.filter(p => {
       if (state.category !== "todas" && p.categoryId !== state.category) return false;
       if (tokens.length === 0) return true;
+
       const hay = norm(p.name + " " + p.categoryName + " " + p.categoryId + " " + p.code);
       return tokens.every(t => hay.indexOf(t) !== -1);
     }).slice();
@@ -888,12 +978,15 @@
       case "recentes":
         list.sort((a, b) => b.order - a.order);
         break;
+
       case "alfabetica":
         list.sort((a, b) => a.name.localeCompare(b.name, "pt", { numeric: true }));
         break;
+
       case "preco-asc":
       case "preco-desc": {
         const dir = state.sort === "preco-asc" ? 1 : -1;
+
         list.sort((a, b) => {
           if (a.price === null && b.price === null) return a.order - b.order;
           if (a.price === null) return 1;
@@ -902,18 +995,21 @@
         });
         break;
       }
+
       default:
         break;
     }
+
     return list;
   }
 
   function renderProducts() {
     if (!els.productGrid) return;
-    const list = getVisibleProducts();
 
+    const list = getVisibleProducts();
     els.productGrid.innerHTML = list.map(p => cardHTML(p, "modal")).join("");
     els.productGrid.hidden = list.length === 0;
+
     if (els.emptyState) els.emptyState.hidden = list.length > 0;
 
     if (els.resultCount) {
@@ -921,21 +1017,26 @@
         ? "Nenhum produto encontrado."
         : "A mostrar " + list.length + " de " + PRODUCTS.length + " peças";
     }
+
     if (els.searchClear) els.searchClear.hidden = state.search === "";
+
     observeCards();
   }
 
   function renderFeatured() {
     if (!els.featuredGrid) return;
+
     els.featuredGrid.innerHTML = FEATURED_IDS
       .filter(id => BY_ID[id])
       .map(id => cardHTML(BY_ID[id], "link"))
       .join("");
+
     observeCards();
   }
 
   function renderFilterButtons() {
     if (!els.filters) return;
+
     els.filters.querySelectorAll(".filter-btn").forEach(btn => {
       const active = btn.dataset.category === state.category;
       btn.classList.toggle("is-active", active);
@@ -949,17 +1050,21 @@
 
   function setCategory(id, resetSearch) {
     if (!isValidCategory(id)) id = "todas";
+
     state.category = id;
+
     if (resetSearch) {
       state.search = "";
       if (els.searchInput) els.searchInput.value = "";
     }
+
     renderFilterButtons();
     renderProducts();
   }
 
   function setupSort() {
     if (!els.sortSelect || HAS_PRICES) return;
+
     Array.prototype.forEach.call(els.sortSelect.options, opt => {
       if (opt.value === "preco-asc" || opt.value === "preco-desc") {
         opt.disabled = true;
@@ -971,10 +1076,13 @@
   function highlightFromHash() {
     const m = /^#product-([a-z0-9]+)$/.exec(location.hash);
     if (!m) return;
+
     const card = $("product-" + m[1]);
     if (!card) return;
+
     setTimeout(() => {
       card.scrollIntoView({ behavior: "smooth", block: "center" });
+
       if (card.animate) {
         card.animate([
           { boxShadow: "0 0 0 0 rgba(31,92,255,0)" },
@@ -997,8 +1105,12 @@
       toast("Contacto ainda não configurado. Define o número de WhatsApp no script.js.", "warning");
       return;
     }
-    const url = "https://wa.me/" + digits(CONFIG.whatsapp) + "?text=" + encodeURIComponent(message);
+
+    const url = "https://wa.me/" + digits(CONFIG.whatsapp) +
+      "?text=" + encodeURIComponent(message);
+
     const win = window.open(url, "_blank");
+
     if (win) {
       win.opener = null;
     } else {
@@ -1008,28 +1120,34 @@
 
   function buildOrderMessage() {
     const t = cartTotals();
+
     const lines = state.cart.map((it, i) => {
       const p = BY_ID[it.id];
+
       let text = (i + 1) + ". " + p.name + " (Ref. " + p.code + ")\n" +
         "   Categoria: " + p.categoryName + "\n" +
         "   Cor: " + COLOR_BY_ID[it.color].name + " | Tamanho: " + it.size + "\n" +
         "   Quantidade: " + it.qty;
+
       if (p.price !== null) {
         text += "\n   Preço unitário: " + formatPrice(p.price) +
           "\n   Subtotal: " + formatPrice(p.price * it.qty);
       } else {
         text += "\n   Preço: sob consulta";
       }
+
       return text;
     });
 
     let totalLine;
+
     if (t.priced === t.lines) {
       totalLine = "Total: " + formatPrice(t.sum);
     } else if (t.priced === 0) {
       totalLine = "Total: a confirmar (preços sob consulta)";
     } else {
-      totalLine = "Total parcial: " + formatPrice(t.sum) + " (restantes itens a confirmar)";
+      totalLine = "Total parcial: " + formatPrice(t.sum) +
+        " (restantes itens a confirmar)";
     }
 
     return "Olá, FREESTYLE DREWP!\n\n" +
@@ -1045,6 +1163,7 @@
       toast("A tua sacola está vazia. Adiciona pelo menos um produto.", "warning");
       return;
     }
+
     openWhatsApp(buildOrderMessage());
   }
 
@@ -1053,6 +1172,7 @@
      ====================================================== */
   function setLink(anchor, textEl, href, text) {
     if (!anchor) return;
+
     if (href) {
       anchor.setAttribute("href", href);
       anchor.removeAttribute("data-pending");
@@ -1075,33 +1195,39 @@
     const ig = String(CONFIG.instagram || "").trim();
     const fb = String(CONFIG.facebook || "").trim();
     const loc = String(CONFIG.location || "").trim();
+
     const isUrl = v => /^https?:\/\//i.test(v);
 
     const igUrl = ig ? (isUrl(ig) ? ig : "https://instagram.com/" + ig.replace(/^@/, "")) : "";
     const igText = ig ? (isUrl(ig) ? "Instagram" : "@" + ig.replace(/^@/, "")) : "";
+
     const fbUrl = fb ? (isUrl(fb) ? fb : "https://facebook.com/" + fb) : "";
     const fbText = fb ? (isUrl(fb) ? "Facebook" : fb) : "";
+
     const waUrl = waOk ? "https://wa.me/" + wa : "";
 
     setLink($("contactWhatsapp"), $("contactWhatsappText"), waUrl, waOk ? formatPhone(wa) : "");
     setLink($("contactPhone"), $("contactPhoneText"), phoneOk ? "tel:+" + phone : "", phoneOk ? formatPhone(phone) : "");
     setLink($("contactInstagram"), $("contactInstagramText"), igUrl, igText);
     setLink($("contactFacebook"), $("contactFacebookText"), fbUrl, fbText);
+
     setLink($("footerWhatsapp"), null, waUrl, "");
     setLink($("footerInstagram"), null, igUrl, "");
     setLink($("footerFacebook"), null, fbUrl, "");
 
     const locCard = $("contactLocation");
     const locText = $("contactLocationText");
+
     if (locCard && locText) {
       locText.textContent = loc || "A configurar";
       locCard.classList.toggle("is-pending", !loc);
     }
 
-    /* Botões "Falar pelo WhatsApp" (qualquer página): atributo data-whatsapp */
     document.querySelectorAll("[data-whatsapp]").forEach(link => {
       if (waOk) {
-        const msg = link.getAttribute("data-message") || "Olá, FREESTYLE DREWP! Gostaria de saber mais sobre a vossa colecção.";
+        const msg = link.getAttribute("data-message") ||
+          "Olá, FREESTYLE DREWP! Gostaria de saber mais sobre a vossa colecção.";
+
         link.setAttribute("href", waUrl + "?text=" + encodeURIComponent(msg));
         link.setAttribute("target", "_blank");
         link.setAttribute("rel", "noopener");
@@ -1115,8 +1241,10 @@
 
   function setupContactForm() {
     if (!els.contactForm) return;
+
     els.contactForm.addEventListener("submit", event => {
       event.preventDefault();
+
       const name = ($("formName") ? $("formName").value : "").trim();
       const subject = $("formSubject") ? $("formSubject").value : "";
       const message = ($("formMessage") ? $("formMessage").value : "").trim();
@@ -1126,6 +1254,7 @@
         if ($("formName")) $("formName").focus();
         return;
       }
+
       if (!message) {
         toast("Escreve a tua mensagem.", "warning");
         if ($("formMessage")) $("formMessage").focus();
@@ -1146,6 +1275,7 @@
      ====================================================== */
   function setMenu(open) {
     if (!els.mainNav || !els.menuToggle) return;
+
     els.mainNav.classList.toggle("is-open", open);
     els.menuToggle.classList.toggle("is-open", open);
     els.menuToggle.setAttribute("aria-expanded", String(open));
@@ -1162,19 +1292,23 @@
     els.menuToggle.addEventListener("click", () => {
       setMenu(!els.mainNav.classList.contains("is-open"));
     });
+
     els.mainNav.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", closeMenu);
     });
+
     document.addEventListener("click", event => {
       if (!els.mainNav.classList.contains("is-open")) return;
       if (els.mainNav.contains(event.target) || els.menuToggle.contains(event.target)) return;
       closeMenu();
     });
+
     window.addEventListener("resize", () => {
       if (window.innerWidth > 900) closeMenu();
     });
 
     const page = document.body.dataset.page;
+
     els.mainNav.querySelectorAll("a[data-page-link]").forEach(a => {
       const active = a.dataset.pageLink === page;
       a.classList.toggle("is-active", active);
@@ -1184,6 +1318,7 @@
 
   function setupHeaderEffects() {
     if (!els.header) return;
+
     const onScroll = () => els.header.classList.toggle("is-scrolled", window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -1194,19 +1329,24 @@
      ====================================================== */
   function trapFocus(event) {
     if (event.key !== "Tab") return;
+
     let container = null;
+
     if (els.modal && !els.modal.hidden) container = els.modal;
     else if (els.drawer && els.drawer.classList.contains("is-open")) container = els.drawer;
+
     if (!container) return;
 
     const items = Array.prototype.filter.call(
       container.querySelectorAll("button:not([disabled]), select, input, a[href]"),
       el => el.getClientRects().length > 0
     );
+
     if (items.length === 0) return;
 
     const first = items[0];
     const last = items[items.length - 1];
+
     if (event.shiftKey && document.activeElement === first) {
       event.preventDefault();
       last.focus();
@@ -1222,27 +1362,29 @@
   function onDocumentClick(event) {
     const target = event.target;
 
-    /* Contactos ainda não configurados */
     const pending = target.closest("a[data-pending]");
+
     if (pending) {
       event.preventDefault();
       toast("Contacto ainda não configurado.", "warning");
       return;
     }
 
-    /* Links de categoria: no catálogo filtram sem recarregar */
     const go = target.closest("[data-go-category]");
+
     if (go && els.productGrid) {
       event.preventDefault();
       closeMenu();
       setCategory(go.dataset.goCategory, true);
+
       const catalog = $("catalogo");
       if (catalog) catalog.scrollIntoView({ behavior: "smooth", block: "start" });
+
       return;
     }
 
-    /* Botões de filtro */
     const filterBtn = target.closest(".filter-btn");
+
     if (filterBtn && els.filters && els.filters.contains(filterBtn)) {
       setCategory(filterBtn.dataset.category, false);
       return;
@@ -1250,6 +1392,7 @@
 
     const actionEl = target.closest("[data-action]");
     if (!actionEl) return;
+
     const action = actionEl.dataset.action;
     const id = actionEl.dataset.id;
     const index = Number(actionEl.dataset.index);
@@ -1258,54 +1401,70 @@
       case "details":
         openModal(id, false);
         break;
+
       case "quick-add":
         quickAdd(id);
         break;
+
       case "pick-color":
         pickColor(id, actionEl.dataset.color);
         break;
+
       case "colors-prev":
       case "colors-next": {
         const slider = actionEl.closest(".color-slider");
         const picker = slider ? slider.querySelector(".color-picker") : null;
+
         if (picker && picker.scrollBy) {
           const first = picker.querySelector(".color-dot");
           const slot = (first && first.offsetWidth) || 38;
-          picker.scrollBy({ left: (action === "colors-next" ? 1 : -1) * slot * 3, behavior: "smooth" });
+
+          picker.scrollBy({
+            left: (action === "colors-next" ? 1 : -1) * slot * 3,
+            behavior: "smooth"
+          });
         }
-        getState(id).locked = true; /* quem desliza as cores pára a troca automática */
+
+        getState(id).locked = true;
         break;
       }
+
       case "bag-inc":
         changeQty(index, 1);
         break;
+
       case "bag-dec":
         changeQty(index, -1);
         break;
+
       case "bag-remove":
         removeFromCart(index);
         break;
+
       default:
         break;
     }
   }
 
-  /* Se uma imagem não existir (ex.: fundo1.png), tenta .jpg, .jpeg, .webp,
-     maiúsculas (Fundo1, JPG) e a pasta "Imagens" antes de desistir */
   function nextAlternativeSource(img) {
     if (!img._heroList) {
       const src = img.getAttribute("src") || "";
       const m = /^(.*?)([^\/]+)\.[A-Za-z0-9]+$/.exec(src);
       if (!m) return "";
+
       const dir = m[1];
       const file = m[2];
+
       const dirs = [dir, dir.replace(/imagens\//, "Imagens/")];
       const files = [file, file.charAt(0).toUpperCase() + file.slice(1)];
       const exts = ["png", "jpg", "jpeg", "webp", "PNG", "JPG"];
       const list = [];
+
       dirs.forEach(d => files.forEach(f => exts.forEach(e => list.push(d + f + "." + e))));
+
       img._heroList = list.filter(s => s !== src);
     }
+
     return img._heroList.shift() || "";
   }
 
@@ -1315,42 +1474,48 @@
 
     if (img.classList.contains("brand-logo")) {
       const alt = nextAlternativeSource(img);
-      if (alt) {
-        img.src = alt;
-      } else {
-        img.hidden = true;
-      }
+
+      if (alt) img.src = alt;
+      else img.hidden = true;
+
       return;
     }
+
     if (img.classList.contains("hero-slide") || img.classList.contains("showcase-slide")) {
       const alternative = nextAlternativeSource(img);
+
       if (alternative) {
         img.src = alternative;
         return;
       }
+
       img.classList.add("is-missing");
       sliderRefreshers.forEach(fn => fn());
       return;
     }
+
     if (img.classList.contains("product-img") && img.dataset.pid && !img.dataset.fallback) {
       handleProductImgError(img);
       return;
     }
+
     if (!img.dataset.fallback) {
       const alt = nextAlternativeSource(img);
+
       if (alt) {
         img.src = alt;
         return;
       }
+
       img.dataset.fallback = "1";
       img.src = PLACEHOLDER;
     }
   }
 
-  /* Imagens que já falharam antes de o script arrancar */
   function sweepBrokenImages() {
     document.querySelectorAll("img").forEach(img => {
-      if (img.complete && img.naturalWidth === 0 && !img.dataset.fallback && img.getAttribute("src")) {
+      if (img.complete && img.naturalWidth === 0 &&
+          !img.dataset.fallback && img.getAttribute("src")) {
         onImageError({ target: img });
       }
     });
@@ -1361,26 +1526,31 @@
     document.addEventListener("keydown", trapFocus);
     document.addEventListener("error", onImageError, true);
 
-    /* Se a pessoa começa a deslizar as cores de uma peça, pára a troca automática dessa peça */
     document.addEventListener("touchstart", event => {
-      const slider = event.target && event.target.closest ? event.target.closest(".color-slider") : null;
-      if (slider && slider.dataset.id && BY_ID[slider.dataset.id]) getState(slider.dataset.id).locked = true;
+      const slider = event.target && event.target.closest
+        ? event.target.closest(".color-slider")
+        : null;
+
+      if (slider && slider.dataset.id && BY_ID[slider.dataset.id]) {
+        getState(slider.dataset.id).locked = true;
+      }
     }, { passive: true });
 
     document.addEventListener("keydown", event => {
       if (event.key !== "Escape") return;
+
       if (els.modal && !els.modal.hidden) closeModal();
       else if (els.drawer && els.drawer.classList.contains("is-open")) closeBag();
       else closeMenu();
     });
 
-    /* Pesquisa */
     if (els.searchInput) {
       els.searchInput.addEventListener("input", () => {
         state.search = els.searchInput.value;
         renderProducts();
       });
     }
+
     if (els.searchClear) {
       els.searchClear.addEventListener("click", () => {
         state.search = "";
@@ -1389,6 +1559,7 @@
         els.searchInput.focus();
       });
     }
+
     if (els.resetFilters) {
       els.resetFilters.addEventListener("click", () => {
         state.search = "";
@@ -1398,10 +1569,10 @@
       });
     }
 
-    /* Ordenação */
     if (els.sortSelect) {
       els.sortSelect.addEventListener("change", () => {
         const value = els.sortSelect.value;
+
         if ((value === "preco-asc" || value === "preco-desc") && !HAS_PRICES) {
           toast("Os preços ainda não estão definidos.", "warning");
           els.sortSelect.value = "todos";
@@ -1409,28 +1580,42 @@
         } else {
           state.sort = value;
         }
+
         renderProducts();
       });
     }
 
-    /* Janela de detalhes */
     if (els.modalClose) els.modalClose.addEventListener("click", closeModal);
+
     if (els.modal) {
       els.modal.addEventListener("click", event => {
         if (event.target === els.modal) closeModal();
       });
     }
-    if (els.modalQtyMinus) els.modalQtyMinus.addEventListener("click", () => setModalQty(state.modalQty - 1));
-    if (els.modalQtyPlus) els.modalQtyPlus.addEventListener("click", () => setModalQty(state.modalQty + 1));
-    if (els.modalAdd) els.modalAdd.addEventListener("click", modalAddToBag);
-    if (els.modalSize) els.modalSize.addEventListener("change", () => els.modalSize.classList.remove("is-invalid"));
 
-    /* Sacola */
+    if (els.modalQtyMinus) {
+      els.modalQtyMinus.addEventListener("click", () => setModalQty(state.modalQty - 1));
+    }
+
+    if (els.modalQtyPlus) {
+      els.modalQtyPlus.addEventListener("click", () => setModalQty(state.modalQty + 1));
+    }
+
+    if (els.modalAdd) els.modalAdd.addEventListener("click", modalAddToBag);
+
+    if (els.modalSize) {
+      els.modalSize.addEventListener("change", () =>
+        els.modalSize.classList.remove("is-invalid")
+      );
+    }
+
     if (els.bagButton) els.bagButton.addEventListener("click", openBag);
     if (els.bagClose) els.bagClose.addEventListener("click", closeBag);
+
     if (els.bagContinue) {
       els.bagContinue.addEventListener("click", () => {
         closeBag();
+
         if (document.body.dataset.page === "catalogo") {
           const catalog = $("catalogo");
           if (catalog) catalog.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1439,6 +1624,7 @@
         }
       });
     }
+
     if (els.bagClear) els.bagClear.addEventListener("click", clearCart);
     if (els.bagCheckout) els.bagCheckout.addEventListener("click", checkout);
 
@@ -1458,20 +1644,23 @@
   /* ======================================================
      17. ARRANQUE
      ====================================================== */
-  /* Cada passo corre isolado: se um falhar, os outros continuam a funcionar */
   function safe(fn) {
     try {
       fn();
     } catch (error) {
-      if (window.console && console.error) console.error("FREESTYLE DREWP:", error);
+      if (window.console && console.error) {
+        console.error("FREESTYLE DREWP:", error);
+      }
     }
   }
 
   function init() {
     safe(() => { state.cart = loadCart(); });
+
     safe(() => {
       const year = $("currentYear");
       if (year) year.textContent = String(new Date().getFullYear());
+
       const total = $("totalCount");
       if (total) total.textContent = String(PRODUCTS.length);
     });
@@ -1481,27 +1670,35 @@
     safe(setupContacts);
     safe(setupContactForm);
     safe(bindEvents);
+
     safe(() => createSlider(".hero-slide", "heroDots", HERO_INTERVAL));
     safe(() => createSlider(".showcase-slide", "showcaseDots", SHOWCASE_INTERVAL));
+
     safe(sweepBrokenImages);
     safe(() => updateBadges(false));
     safe(renderBag);
 
     safe(() => {
       if (!els.productGrid) return;
+
       const wanted = new URLSearchParams(window.location.search).get("categoria");
       if (wanted && isValidCategory(wanted)) state.category = wanted;
+
       setupSort();
       renderFilterButtons();
       renderProducts();
       highlightFromHash();
     });
+
     safe(renderFeatured);
 
     setInterval(colorTick, COLOR_INTERVAL);
 
-    safe(() => { if (location.hash === "#sacola") openBag(); });
+    safe(() => {
+      if (location.hash === "#sacola") openBag();
+    });
   }
 
   init();
 })();
+ 
