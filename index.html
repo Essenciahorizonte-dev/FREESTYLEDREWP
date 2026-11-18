@@ -17,7 +17,6 @@
 <body data-page="inicio">
   <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
 
-  <!-- CABEÇALHO -->
   <header class="site-header" id="siteHeader">
     <div class="container header-inner">
       <a class="brand" href="index.html" aria-label="FREESTYLE DREWP - Início">
@@ -47,7 +46,7 @@
   </header>
 
   <main id="conteudo">
-    <!-- APRESENTAÇÃO: 3 fundos que se trocam sozinhos -->
+    <!-- APRESENTAÇÃO -->
     <section class="hero" id="inicio" aria-label="Apresentação FREESTYLE DREWP">
       <div class="hero-slides" id="heroSlides">
         <img class="hero-slide is-active" src="./imagens/fundo1.jpg" alt="Campanha FREESTYLE DREWP - imagem 1" fetchpriority="high">
@@ -259,5 +258,35 @@
       <p>Criado por <strong>ESSÊNCIA HORIZONTE</strong></p>
     </div>
   </footer>
+
+  <!-- SACOLA -->
+  <div class="overlay" id="overlay" hidden></div>
+
+  <aside class="bag-drawer" id="bagDrawer" aria-label="Sacola de compras" aria-hidden="true">
+    <div class="bag-head">
+      <h3>A tua sacola</h3>
+      <button type="button" class="modal-close static" id="bagClose" aria-label="Fechar sacola">&times;</button>
+    </div>
+
+    <div class="bag-body">
+      <p class="bag-empty" id="bagEmpty">A tua sacola está vazia. Explora o catálogo e escolhe as tuas peças.</p>
+      <ul class="bag-items" id="bagItems"></ul>
+    </div>
+
+    <div class="bag-foot">
+      <div class="bag-summary">
+        <div><span>Artigos</span><strong id="bagSummaryCount">0</strong></div>
+        <div><span>Total</span><strong id="bagTotal">Preço sob consulta</strong></div>
+      </div>
+      <button type="button" class="btn btn-whatsapp btn-block" id="bagCheckout">Finalizar encomenda</button>
+      <div class="bag-secondary">
+        <button type="button" class="btn btn-outline" id="bagContinue">Continuar a comprar</button>
+        <button type="button" class="btn btn-outline" id="bagClear">Esvaziar sacola</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NOTIFICAÇÕES -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
 </body>
 </html>
