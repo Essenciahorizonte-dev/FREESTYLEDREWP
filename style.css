@@ -1,3 +1,4 @@
+
 /* ==========================================================
    FREESTYLE DREWP - style.css (partilhado: Início, Catálogo, Contacto)
    Fundo branco | cabeçalho e rodapé pretos | detalhes em azul e cinza
@@ -132,11 +133,9 @@ h1, h2, h3, h4, p { margin: 0; }
 .btn-ghost-light { border-color: rgba(255, 255, 255, .85); color: var(--white); }
 .btn-ghost-light:hover { background: var(--white); color: var(--black); }
 
-/* Preto-cinza escuro (botões "catálogo") */
 .btn-graphite { background: var(--graphite); border-color: var(--graphite); color: var(--white); box-shadow: 0 8px 20px rgba(31, 31, 36, .28); }
 .btn-graphite:hover { background: var(--graphite-2); border-color: var(--graphite-2); }
 
-/* Verde do WhatsApp */
 .btn-whatsapp { background: var(--whatsapp); border-color: var(--whatsapp); color: var(--white); box-shadow: 0 8px 20px rgba(37, 211, 102, .32); }
 .btn-whatsapp:hover { background: var(--whatsapp-dark); border-color: var(--whatsapp-dark); }
 
@@ -170,7 +169,7 @@ h1, h2, h3, h4, p { margin: 0; }
 }
 .section-text { color: var(--gray-500); }
 
-/* ---------- Cabeçalho (preto, fixo no topo) ---------- */
+/* ---------- Cabeçalho ---------- */
 .site-header {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -295,7 +294,7 @@ h1, h2, h3, h4, p { margin: 0; }
 .menu-toggle.is-open span:nth-child(2) { opacity: 0; }
 .menu-toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ---------- Início: apresentação com 3 fundos que se trocam ---------- */
+/* ---------- Início: apresentação ---------- */
 .hero {
   position: relative;
   min-height: calc(100vh - var(--header-h));
@@ -531,7 +530,7 @@ h1, h2, h3, h4, p { margin: 0; }
 .cta-box h2 { margin-bottom: 10px; font-size: clamp(24px, 4.5vw, 36px); line-height: 1.2; }
 .cta-box p { max-width: 520px; margin: 0 auto 26px; color: var(--gray-700); }
 
-/* ---------- Início: novidades (vitrine com troca automática) ---------- */
+/* ---------- Início: novidades ---------- */
 .showcase {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -757,7 +756,6 @@ h1, h2, h3, h4, p { margin: 0; }
 .product-price { margin-bottom: 4px; font-size: 15px; font-weight: 700; color: var(--blue-dark); }
 .product-stock { margin-bottom: 12px; font-size: 12px; color: var(--gray-700); }
 
-/* Bolinhas de cor: base (usada também na janela de detalhes) */
 .color-picker {
   display: flex;
   flex-wrap: wrap;
@@ -790,7 +788,6 @@ h1, h2, h3, h4, p { margin: 0; }
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .22), 0 0 0 2px var(--white), 0 0 0 4px var(--blue);
 }
 
-/* Cartões: 3 cores em destaque e as restantes ao deslizar */
 .color-slider {
   display: flex;
   align-items: center;
@@ -943,7 +940,7 @@ a.contact-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .faq-item[open] summary::after { content: '\2212'; }
 .faq-item p { padding: 0 18px 18px; color: var(--gray-700); }
 
-/* ---------- Rodapé (preto) ---------- */
+/* ---------- Rodapé ---------- */
 .site-footer {
   padding-top: 56px;
   background: var(--black);
