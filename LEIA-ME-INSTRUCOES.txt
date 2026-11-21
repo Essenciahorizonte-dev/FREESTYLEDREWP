@@ -1,0 +1,147 @@
+FREESTYLE DREWP - GUIA DE INSTRUÇÕES (só para ti, não é preciso enviar para o GitHub)
+===========================================================================
+
+O QUE VEM NESTE ZIP (5 ficheiros, todos na mesma pasta)
+  index.html      página Início
+  catalogo.html   página Catálogo
+  contacto.html   página Contacto
+  style.css       todo o visual (cores, espaços, telemóvel/computador)
+  script.js       todo o funcionamento (catálogo, cores, sacola, WhatsApp)
+Dentro de cada ficheiro há um GUIA no início, em comentários, a explicar o que
+faz cada parte. Os comentários só se vêem no código; os clientes não os vêem.
+
+COMO PUBLICAR NO GITHUB
+  1. Extrai o ZIP no telemóvel/computador.
+  2. No repositório FREESTYLEDREWP: Add file > Upload files.
+  3. Envia os 5 ficheiros (substituem os antigos). NÃO apagues a pasta "imagens".
+  4. Em baixo, toca em "Commit changes" e espera 1 a 2 minutos.
+  5. Abre o site num separador privado (para não mostrar a versão antiga).
+
+COMO FUNCIONA O CATÁLOGO (o que pediste)
+  - Peça COM fotografias: aparece. Peça SEM fotografias: fica completamente oculta
+    (sem cartão cinzento, sem nome, sem preço, sem botão e sem buracos).
+  - A ordem é sempre a do catálogo. Se só a Polo 01 tiver fotos, ela fica em 1.º lugar.
+    Quando adicionares a Camisa 01, ela entra antes da Polo 01 sozinha.
+  - Vale para todas as categorias: Camisas, Calças, Chapéus, Sacolas e Camisolas.
+  - Categoria sem nenhuma peça com fotos: o filtro, o cartão do Início e a ligação
+    do rodapé ficam escondidos até haver fotos.
+  - Não precisas de mexer no HTML nem no JS para mostrar uma peça: só enviar as fotos.
+  - No catálogo as fotos trocam de cor sozinhas. Em "Encontra o teu estilo" (Início)
+    as fotos são FIXAS: mostram a primeira peça disponível de cada categoria.
+
+NOMES DAS FOTOS (pasta imagens/, tudo em minúsculas, sem acentos nem espaços)
+  Padrão:  <peça>-<cor>.jpg      ex.: camisa1-branco.jpg
+  Cores:   branco, preto, azul, rosa, vermelho, castanho, cinza
+  Basta UMA cor para a peça aparecer. As cores sem foto ficam escondidas.
+  Formato recomendado: .jpg (também aceita .png, .jpeg e .webp).
+
+  Nome da peça no site  ->  início do nome do ficheiro
+
+    Camisa 01  ->  camisa1-<cor>.jpg
+    Camisa 02  ->  camisa2-<cor>.jpg
+    Camisa 03  ->  camisa3-<cor>.jpg
+    Camisa 04  ->  camisa4-<cor>.jpg
+    Camisa 05  ->  camisa5-<cor>.jpg
+    Polo 01  ->  polo1-<cor>.jpg
+    Polo 02  ->  polo2-<cor>.jpg
+    Polo 03  ->  polo3-<cor>.jpg
+    Polo 04  ->  polo4-<cor>.jpg
+    Polo 05  ->  polo5-<cor>.jpg
+    Calça 01  ->  calsa1-<cor>.jpg
+    Calça 02  ->  calsa2-<cor>.jpg
+    Calça 03  ->  calsa3-<cor>.jpg
+    Calça 04  ->  calsa4-<cor>.jpg
+    Chapéu 01  ->  chapeu1-<cor>.jpg
+    Chapéu 02  ->  chapeu2-<cor>.jpg
+    Chapéu 03  ->  chapeu3-<cor>.jpg
+    Chapéu 04  ->  chapeu4-<cor>.jpg
+    Sacola 01  ->  sacola1-<cor>.jpg
+    Sacola 02  ->  sacola2-<cor>.jpg
+    Sacola 03  ->  sacola3-<cor>.jpg
+    Sacola 04  ->  sacola4-<cor>.jpg
+    Camisola 01  ->  camisola1-<cor>.jpg
+    Camisola 02  ->  camisola2-<cor>.jpg
+    Camisola 03  ->  camisola3-<cor>.jpg
+    Camisola 04  ->  camisola4-<cor>.jpg
+
+  Lista completa de ficheiros (7 cores por peça):
+
+  CAMISAS
+    camisa1-branco.jpg camisa1-preto.jpg camisa1-azul.jpg camisa1-rosa.jpg camisa1-vermelho.jpg camisa1-castanho.jpg camisa1-cinza.jpg
+    camisa2-branco.jpg camisa2-preto.jpg camisa2-azul.jpg camisa2-rosa.jpg camisa2-vermelho.jpg camisa2-castanho.jpg camisa2-cinza.jpg
+    camisa3-branco.jpg camisa3-preto.jpg camisa3-azul.jpg camisa3-rosa.jpg camisa3-vermelho.jpg camisa3-castanho.jpg camisa3-cinza.jpg
+    camisa4-branco.jpg camisa4-preto.jpg camisa4-azul.jpg camisa4-rosa.jpg camisa4-vermelho.jpg camisa4-castanho.jpg camisa4-cinza.jpg
+    camisa5-branco.jpg camisa5-preto.jpg camisa5-azul.jpg camisa5-rosa.jpg camisa5-vermelho.jpg camisa5-castanho.jpg camisa5-cinza.jpg
+
+  POLOS
+    polo1-branco.jpg polo1-preto.jpg polo1-azul.jpg polo1-rosa.jpg polo1-vermelho.jpg polo1-castanho.jpg polo1-cinza.jpg
+    polo2-branco.jpg polo2-preto.jpg polo2-azul.jpg polo2-rosa.jpg polo2-vermelho.jpg polo2-castanho.jpg polo2-cinza.jpg
+    polo3-branco.jpg polo3-preto.jpg polo3-azul.jpg polo3-rosa.jpg polo3-vermelho.jpg polo3-castanho.jpg polo3-cinza.jpg
+    polo4-branco.jpg polo4-preto.jpg polo4-azul.jpg polo4-rosa.jpg polo4-vermelho.jpg polo4-castanho.jpg polo4-cinza.jpg
+    polo5-branco.jpg polo5-preto.jpg polo5-azul.jpg polo5-rosa.jpg polo5-vermelho.jpg polo5-castanho.jpg polo5-cinza.jpg
+
+  CALÇAS
+    calsa1-branco.jpg calsa1-preto.jpg calsa1-azul.jpg calsa1-rosa.jpg calsa1-vermelho.jpg calsa1-castanho.jpg calsa1-cinza.jpg
+    calsa2-branco.jpg calsa2-preto.jpg calsa2-azul.jpg calsa2-rosa.jpg calsa2-vermelho.jpg calsa2-castanho.jpg calsa2-cinza.jpg
+    calsa3-branco.jpg calsa3-preto.jpg calsa3-azul.jpg calsa3-rosa.jpg calsa3-vermelho.jpg calsa3-castanho.jpg calsa3-cinza.jpg
+    calsa4-branco.jpg calsa4-preto.jpg calsa4-azul.jpg calsa4-rosa.jpg calsa4-vermelho.jpg calsa4-castanho.jpg calsa4-cinza.jpg
+
+  CHAPÉUS
+    chapeu1-branco.jpg chapeu1-preto.jpg chapeu1-azul.jpg chapeu1-rosa.jpg chapeu1-vermelho.jpg chapeu1-castanho.jpg chapeu1-cinza.jpg
+    chapeu2-branco.jpg chapeu2-preto.jpg chapeu2-azul.jpg chapeu2-rosa.jpg chapeu2-vermelho.jpg chapeu2-castanho.jpg chapeu2-cinza.jpg
+    chapeu3-branco.jpg chapeu3-preto.jpg chapeu3-azul.jpg chapeu3-rosa.jpg chapeu3-vermelho.jpg chapeu3-castanho.jpg chapeu3-cinza.jpg
+    chapeu4-branco.jpg chapeu4-preto.jpg chapeu4-azul.jpg chapeu4-rosa.jpg chapeu4-vermelho.jpg chapeu4-castanho.jpg chapeu4-cinza.jpg
+
+  SACOLAS
+    sacola1-branco.jpg sacola1-preto.jpg sacola1-azul.jpg sacola1-rosa.jpg sacola1-vermelho.jpg sacola1-castanho.jpg sacola1-cinza.jpg
+    sacola2-branco.jpg sacola2-preto.jpg sacola2-azul.jpg sacola2-rosa.jpg sacola2-vermelho.jpg sacola2-castanho.jpg sacola2-cinza.jpg
+    sacola3-branco.jpg sacola3-preto.jpg sacola3-azul.jpg sacola3-rosa.jpg sacola3-vermelho.jpg sacola3-castanho.jpg sacola3-cinza.jpg
+    sacola4-branco.jpg sacola4-preto.jpg sacola4-azul.jpg sacola4-rosa.jpg sacola4-vermelho.jpg sacola4-castanho.jpg sacola4-cinza.jpg
+
+  CAMISOLAS
+    camisola1-branco.jpg camisola1-preto.jpg camisola1-azul.jpg camisola1-rosa.jpg camisola1-vermelho.jpg camisola1-castanho.jpg camisola1-cinza.jpg
+    camisola2-branco.jpg camisola2-preto.jpg camisola2-azul.jpg camisola2-rosa.jpg camisola2-vermelho.jpg camisola2-castanho.jpg camisola2-cinza.jpg
+    camisola3-branco.jpg camisola3-preto.jpg camisola3-azul.jpg camisola3-rosa.jpg camisola3-vermelho.jpg camisola3-castanho.jpg camisola3-cinza.jpg
+    camisola4-branco.jpg camisola4-preto.jpg camisola4-azul.jpg camisola4-rosa.jpg camisola4-vermelho.jpg camisola4-castanho.jpg camisola4-cinza.jpg
+
+OUTRAS IMAGENS
+  logotipo.png (cabeçalho e rodapé; fundo transparente, versão clara)
+  fundo1.jpg, fundo2.jpg, fundo3.jpg (apresentação do Início; trocam sozinhos)
+  novidades1.png a novidades3.png (secção Novidades do Início; também aceita .jpg)
+
+PARA O SITE SER RÁPIDO
+  - Comprime as fotos: cerca de 800 x 1000 px e menos de 200 KB cada.
+    Fotos pesadas (vários MB) são a maior causa de lentidão.
+  - Os fundos do Início: cerca de 1600 x 900 px e menos de 400 KB.
+  - Na 1.ª visita o site descobre que fotos existem (cerca de meio segundo).
+    Da 2.ª visita em diante guarda isso no telemóvel e mostra tudo no mesmo instante.
+
+SE UMA PEÇA NÃO APARECER
+  1. O nome tem de ser exacto: minúsculas, sem espaços, ex.: polo2-branco.jpg
+  2. A foto tem de estar dentro da pasta imagens/ (na raiz do repositório).
+  3. A extensão tem de ser a verdadeira (não renomeies PNG para JPG à mão).
+  4. Depois do commit espera 1 a 2 minutos e abre num separador privado.
+
+PREÇOS (já definidos)
+  Camisa    800 MT      Polo     1000 MT
+  Calça    1200 MT      Chapéu    450 MT
+  Sacola    450 MT      Camisola 1200 MT
+  Aparecem nos cartões, na janela de detalhes, na sacola (com o total) e na
+  mensagem do WhatsApp. "Menor preço" e "Maior preço" já funcionam.
+  Para mudar: script.js > PRICE_BY_TYPE (preço de cada tipo de peça).
+  Para mudar UMA peça só: script.js > PRICES, ex.:  camisa3: 900
+
+COMENTÁRIOS NO CÓDIGO
+  Cada ficheiro tem, no início, um GUIA a dizer o que faz e onde editar.
+  No script.js todas as funções têm uma linha a explicar para que servem.
+  No style.css há um índice e cada bloco importante diz para que serve.
+  Nos HTML, cada secção tem um comentário a explicar o que é.
+  Os comentários só se vêem no código; os clientes nunca os vêem.
+
+ONDE EDITAR (início do script.js, secção 1 - CONFIGURAÇÃO)
+  CONFIG.whatsapp  número de WhatsApp (já está 258861697479)
+  CONFIG.phone, CONFIG.instagram, CONFIG.facebook, CONFIG.location
+  PRICES           preços, ex.: camisa1: 1500
+  AVAILABILITY     ex.: chapeu2: "Esgotado"
+  PRODUCT_NAMES    mudar o nome de uma peça
+  PRODUCT_COLORS   limitar as cores de uma peça
