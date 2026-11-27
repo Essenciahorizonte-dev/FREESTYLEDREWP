@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="FREESTYLE DREWP - moda urbana e streetwear. Camisas, calças, chapéus, sacolas e camisolas.">
+  <title>FREESTYLE DREWP | Início</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%230a0a0f%27/%3E%3Ctext x=%2732%27 y=%2745%27 font-size=%2740%27 font-family=%27Arial,sans-serif%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%23fff%27%3EF%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fontes: carregam sem bloquear a página (mais rápido). Montserrat = texto, Permanent Marker = nome da marca -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Permanent+Marker&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Permanent+Marker&display=swap"></noscript>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./public-config.js" defer></script>
+  <script src="./public-sync.js" defer></script>
+  <script src="./script.js" defer></script>
+</head>
+<body data-page="inicio">
+  <!--
+    ============================================================
+    GUIA DESTA PÁGINA (INÍCIO) - só se vê no código
+    ============================================================
+    ORDEM: Cabeçalho > Apresentação (5 fundos) > Faixa > Novidades (3 imagens)
+           > Encontra o teu estilo > Sobre a marca > Como encomendar
+           > Chamada final > Rodapé > Sacola.
+
+    O QUE O script.js FAZ AQUI
+    - Troca sozinho os 5 fundos da apresentação (imagens de destaque carregadas pelo painel).
+    - Troca sozinho as 3 imagens das Novidades (imagens de novidades carregadas pelo painel).
+    - "Encontra o teu estilo": o JS põe a foto da PRIMEIRA peça com fotografias de
+      cada categoria (foto FIXA, não muda). Categoria sem fotos = cartão escondido.
+    - Liga os botões com data-whatsapp ao número definido no script.js.
+
+    REGRAS: NÃO mudes os id="..." nem os atributos data-... (o script.js usa-os).
+    Os TEXTOS, títulos e ligações podes mudar à vontade.
+    ============================================================
+  -->
+  <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
+
+  <!-- CABEÇALHO: logótipo, menu (Início, Catálogo, Contacto) e ícone da sacola com o número de artigos. Fica fixo no topo. -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="FREESTYLE DREWP - Início">
+        <img class="brand-logo" alt="Logótipo FREESTYLE DREWP" hidden>
+        <span class="brand-text">Freestyle Drewp</span>
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+        <a href="index.html" data-page-link="inicio">Início</a>
+        <a href="catalogo.html" data-page-link="catalogo">Catálogo</a>
+        <a href="contacto.html" data-page-link="contacto">Contacto</a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="bag-button" id="bagButton" aria-label="Abrir sacola de compras" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 7h12l1 13H5L6 7z"></path>
+            <path d="M9 10V6a3 3 0 0 1 6 0v4"></path>
+          </svg>
+          <span class="bag-count" id="bagCount">0</span>
+        </button>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- APRESENTAÇÃO: 5 fundos que se trocam sozinhos -->
+    <section class="hero" id="inicio" aria-label="Apresentação FREESTYLE DREWP">
+      <!-- Fundos que se trocam sozinhos. Os 3 primeiros têm uma imagem de reserva em assets/; o 4.º e o 5.º só aparecem se forem carregados no painel (Imagem de destaque: hero-4, hero-5). -->
+      <div class="hero-slides" id="heroSlides">
+        <img class="hero-slide is-active" alt="Campanha FREESTYLE DREWP - imagem 1" fetchpriority="high">
+        <img class="hero-slide" alt="Campanha FREESTYLE DREWP - imagem 2" fetchpriority="low" decoding="async">
+        <img class="hero-slide" alt="Campanha FREESTYLE DREWP - imagem 3" fetchpriority="low" decoding="async">
+        <img class="hero-slide" alt="Campanha FREESTYLE DREWP - imagem 4" fetchpriority="low" decoding="async">
+        <img class="hero-slide" alt="Campanha FREESTYLE DREWP - imagem 5" fetchpriority="low" decoding="async">
+      </div>
+      <div class="hero-overlay"></div>
+
+      <div class="container hero-content">
+        <p class="eyebrow">Colecção streetwear</p>
+        <h1 class="hero-brand">Freestyle Drewp</h1>
+        <h2 class="hero-title">O teu estilo. As tuas regras.</h2>
+        <p class="hero-text">Mais do que vestir, é expressar quem és. Camisas, polos, calças, camisolas, blusões, sacolas, chapéus e cropped’s pensados para quem vive a rua com personalidade.</p>
+        <div class="hero-buttons">
+          <a class="btn btn-graphite" href="catalogo.html">Explorar catálogo</a>
+          <a class="btn btn-whatsapp" href="#" data-whatsapp>Falar pelo WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="hero-dots" id="heroDots"></div>
+    </section>
+
+    <!-- FAIXA: 4 palavras da marca por baixo da apresentação. Só texto, podes mudar. -->
+    <section class="strip" aria-label="Destaques da marca">
+      <div class="container strip-inner">
+        <span>Moda urbana</span>
+        <span>Personalidade</span>
+        <span>Exclusividade</span>
+        <span>Encomenda pelo WhatsApp</span>
+      </div>
+    </section>
+
+    <!-- NOVIDADES: vitrine com 3 imagens que se trocam sozinhas (novidades1 a novidades3) e um botão para o catálogo. -->
+    <section class="section section-alt" id="novidades">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Acabou de chegar</p>
+          <h2 class="section-title">Novidades</h2>
+          <p class="section-text">As peças mais recentes da Freestyle Drewp.</p>
+        </header>
+
+        <!-- 3 imagens que se trocam sozinhas (novidades1, novidades2, novidades3; .png ou .jpg) -->
+        <div class="showcase">
+          <div class="showcase-media">
+            <img class="showcase-slide is-active" alt="Novidade FREESTYLE DREWP - peça 1" loading="eager" fetchpriority="high" decoding="sync">
+            <img class="showcase-slide" alt="Novidade FREESTYLE DREWP - peça 2" loading="eager" decoding="async">
+            <img class="showcase-slide" alt="Novidade FREESTYLE DREWP - peça 3" loading="eager" decoding="async">
+            <div class="showcase-dots" id="showcaseDots"></div>
+          </div>
+
+          <div class="showcase-info">
+            <p class="eyebrow">Em destaque</p>
+            <h3>As peças mais recentes</h3>
+            <p>Descobre as novidades da Freestyle Drewp, escolhe a tua cor e o teu tamanho e fecha a encomenda pelo WhatsApp.</p>
+            <ul class="showcase-points">
+              <li>Várias cores em cada peça</li>
+              <li>Encomenda simples pelo WhatsApp</li>
+              <li>Atitude urbana em cada detalhe</li>
+            </ul>
+            <a class="btn btn-graphite" href="catalogo.html">Ver no catálogo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENCONTRA O TEU ESTILO: um cartão por categoria. O script.js mostra a foto FIXA da primeira peça disponível de cada uma. -->
+    <section class="section" id="categorias">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Explora a Freestyle</p>
+          <h2 class="section-title">Encontra o teu estilo</h2>
+          <p class="section-text">Escolhe uma categoria e vê só as peças que procuras.</p>
+        </header>
+
+        <!-- Cada cartão começa escondido (hidden) e o script.js mostra-o com a foto fixa da primeira peça
+             disponível da categoria. Não ponhas src nas imagens: o JS trata disso. -->
+        <div class="category-grid">
+          <a class="category-tile" href="catalogo.html?categoria=camisa" data-category="camisa" hidden>
+            <img alt="" loading="lazy">
+            <span class="category-label"><strong>Camisas</strong><small>Expressa o teu estilo</small></span>
+          </a>
+          <a class="category-tile" href="catalogo.html?categoria=calsa" data-category="calsa" hidden>
+            <img alt="" loading="lazy">
+            <span class="category-label"><strong>Calças</strong><small>Conforto e personalidade</small></span>
+          </a>
+          <a class="category-tile" href="catalogo.html?categoria=chapeu" data-category="chapeu" hidden>
+            <img alt="" loading="lazy">
+            <span class="category-label"><strong>Chapéus</strong><small>O detalhe que completa o visual</small></span>
+          </a>
+          <a class="category-tile" href="catalogo.html?categoria=sacola" data-category="sacola" hidden>
+            <img alt="" loading="lazy">
+            <span class="category-label"><strong>Sacolas</strong><small>Leva o teu estilo contigo</small></span>
+          </a>
+          <a class="category-tile" href="catalogo.html?categoria=camisola" data-category="camisola" hidden>
+            <img alt="" loading="lazy">
+            <span class="category-label"><strong>Camisolas e Blusões</strong><small>Conforto para todos os dias</small></span>
+          </a>
+          <a class="category-tile" href="catalogo.html?categoria=cropped" data-category="cropped" hidden>
+            <img alt="" loading="lazy">
+            <span class="category-label"><strong>Cropped's</strong><small>Estilo e personalidade</small></span>
+          </a>
+        </div>
+
+        <div class="section-cta">
+          <a class="btn btn-outline" href="catalogo.html">Todas as peças</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE A MARCA: texto institucional e os 6 valores da marca. Podes mudar os textos. -->
+    <section class="section section-alt" id="sobre">
+      <div class="container about-grid">
+        <div class="about-text">
+          <p class="eyebrow">Sobre a marca</p>
+          <h2 class="section-title">Não é apenas roupa. É identidade.</h2>
+          <p>A FREESTYLE DREWP acredita que cada pessoa tem uma maneira única de expressar o seu estilo. Trabalhamos com peças de moda e acessórios que representam atitude, personalidade e liberdade.</p>
+          <p>Inspirada na cultura urbana, a marca valoriza a originalidade e a expressão individual: vestir é uma forma de dizer quem és, sem pedir licença.</p>
+          <a class="btn btn-dark" href="catalogo.html">Descobrir a colecção</a>
+        </div>
+        <ul class="about-values">
+          <li><strong>Identidade</strong><span>Peças com carácter próprio.</span></li>
+          <li><strong>Estilo</strong><span>Visual urbano, limpo e marcante.</span></li>
+          <li><strong>Originalidade</strong><span>Longe do óbvio e do genérico.</span></li>
+          <li><strong>Cultura urbana</strong><span>Inspirada na rua e na juventude.</span></li>
+          <li><strong>Personalidade</strong><span>Cada pessoa, a sua maneira.</span></li>
+          <li><strong>Expressão individual</strong><span>A moda como forma de te expressares.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- COMO ENCOMENDAR: os 3 passos (escolhe, junta à sacola, finaliza pelo WhatsApp). -->
+    <section class="section" id="como-encomendar">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Passo a passo</p>
+          <h2 class="section-title">Como encomendar</h2>
+          <p class="section-text">Três passos simples, sem complicações.</p>
+        </header>
+
+        <div class="steps">
+          <article class="step">
+            <span class="step-number">1</span>
+            <h3>Escolhe a peça</h3>
+            <p>Explora o catálogo e escolhe a categoria, a cor e o tamanho.</p>
+          </article>
+          <article class="step">
+            <span class="step-number">2</span>
+            <h3>Junta à sacola</h3>
+            <p>Adiciona as peças de que gostas e confirma as quantidades.</p>
+          </article>
+          <article class="step">
+            <span class="step-number">3</span>
+            <h3>Finaliza pelo WhatsApp</h3>
+            <p>Enviamos a tua encomenda por mensagem para confirmar disponibilidade, pagamento e entrega.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAMADA FINAL: caixa com o botão verde Falar pelo WhatsApp (o número vem do script.js). -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="cta-box">
+          <p class="eyebrow">Estamos aqui para ti</p>
+          <h2>Gostaste de alguma peça?</h2>
+          <p>Fala directamente connosco e descobre mais sobre a nossa colecção.</p>
+          <a class="btn btn-whatsapp" href="#" data-whatsapp>Falar pelo WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RODAPÉ: marca, ligações das páginas, categorias, contactos e o crédito ESSÊNCIA HORIZONTE. -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="FREESTYLE DREWP - Início">
+          <img class="brand-logo" alt="Logótipo FREESTYLE DREWP" hidden>
+          <span class="brand-text">Freestyle Drewp</span>
+        </a>
+        <p>Moda urbana com atitude, personalidade e liberdade. O teu estilo. As tuas regras.</p>
+      </div>
+
+      <div>
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Categorias</h4>
+        <ul>
+          <li><a href="catalogo.html?categoria=camisa" data-go-category="camisa">Camisas</a></li>
+          <li><a href="catalogo.html?categoria=calsa" data-go-category="calsa">Calças</a></li>
+          <li><a href="catalogo.html?categoria=chapeu" data-go-category="chapeu">Chapéus</a></li>
+          <li><a href="catalogo.html?categoria=sacola" data-go-category="sacola">Sacolas</a></li>
+          <li><a href="catalogo.html?categoria=camisola" data-go-category="camisola">Camisolas e Blusões</a></li>
+          <li><a href="catalogo.html?categoria=cropped" data-go-category="cropped">Cropped's</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a id="footerWhatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a id="footerInstagram" href="#" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a id="footerFacebook" href="#" target="_blank" rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; <span id="currentYear">2026</span> FREESTYLE DREWP. Todos os direitos reservados.</p>
+      <p>Criado por <strong>ESSÊNCIA HORIZONTE</strong></p>
+    </div>
+  </footer>
+
+  <!-- SACOLA: gaveta com as peças escolhidas, total e o botão Finalizar encomenda (abre o WhatsApp). O script.js preenche a lista. -->
+  <div class="overlay" id="overlay" hidden></div>
+
+  <aside class="bag-drawer" id="bagDrawer" aria-label="Sacola de compras" aria-hidden="true">
+    <div class="bag-head">
+      <h3>A tua sacola</h3>
+      <button type="button" class="modal-close static" id="bagClose" aria-label="Fechar sacola">&times;</button>
+    </div>
+
+    <div class="bag-body">
+      <p class="bag-empty" id="bagEmpty">A tua sacola está vazia. Explora o catálogo e escolhe as tuas peças.</p>
+      <ul class="bag-items" id="bagItems"></ul>
+    </div>
+
+    <div class="bag-foot">
+      <div class="bag-summary">
+        <div><span>Artigos</span><strong id="bagSummaryCount">0</strong></div>
+        <div><span>Total</span><strong id="bagTotal">Preço sob consulta</strong></div>
+      </div>
+      <button type="button" class="btn btn-whatsapp btn-block" id="bagCheckout">Finalizar encomenda</button>
+      <div class="bag-secondary">
+        <button type="button" class="btn btn-outline" id="bagContinue">Continuar a comprar</button>
+        <button type="button" class="btn btn-outline" id="bagClear">Esvaziar sacola</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NOTIFICAÇÕES: mensagens pequenas que aparecem em baixo (Produto adicionado, Sacola esvaziada, etc.). -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>
