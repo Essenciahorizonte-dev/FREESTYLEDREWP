@@ -1,0 +1,5 @@
+FREESTYLE DREWP VIP FINAL
+Build: 2026-11-27
+Focus: catálogo público, Centro de Imagens, referências dinâmicas, arquivo (desactivar/reactivar/eliminar), rotação automática das fotografias activas.
+Supabase: phkykhghctgurirfqvtn.supabase.co
+Public site: https://proud-bread-dabb.contactoessenciahorizonte.workers.dev/

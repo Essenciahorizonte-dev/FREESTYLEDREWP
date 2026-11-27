@@ -1,0 +1,17 @@
+FREESTYLE DREWP — TESTE FINAL
+
+[ ] Painel abre em admin.html e permite iniciar sessão.
+[ ] VER SITE abre o novo endereço público.
+[ ] Produtos lista referências criadas na base de dados.
+[ ] Centro de imagens mostra nomes e referências reais dos produtos.
+[ ] As cores disponíveis correspondem às cores gravadas em Produtos.
+[ ] Upload JPG, PNG e WEBP funciona.
+[ ] Acrescentar mantém fotos anteriores activas.
+[ ] Substituir desactiva fotos antigas da mesma referência/cor.
+[ ] Desactivar remove a foto do catálogo sem apagar o objecto.
+[ ] Reactivar volta a disponibilizar a foto.
+[ ] Eliminar definitivamente remove o registo e o ficheiro do Storage.
+[ ] Produtos com várias fotos alternam automaticamente no catálogo.
+[ ] Produtos com várias cores alternam entre fotos/cores.
+[ ] Catálogo mostra todos os produtos activos que têm pelo menos uma foto activa.
+[ ] Carrinho e encomenda WhatsApp continuam a funcionar.
