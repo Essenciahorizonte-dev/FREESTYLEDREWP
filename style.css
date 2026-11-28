@@ -1390,3 +1390,43 @@ a.contact-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================
+   FREESTYLE DREWP — CATÁLOGO 2 COLUNAS
+   Aplicado em telemóveis, tablets e computadores
+========================================== */
+
+.product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  width: 100%;
+  align-items: stretch;
+}
+
+.product-grid > * {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Imagens dos produtos */
+.product-grid img {
+  max-width: 100%;
+}
+
+/* Telemóveis */
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+}
+
+/* Cartões adaptados a ecrãs pequenos */
+@media (max-width: 380px) {
+  .product-grid {
+    gap: 8px !important;
+  }
+}
